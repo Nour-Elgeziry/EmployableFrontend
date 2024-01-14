@@ -27,8 +27,13 @@ const FormCard = (props: { type: CardType }) => {
     confirmPassword: false,
   });
 
+  const [showToast, setShowToast] = useState(false);
+
   const submit = (event: any) => {
     event.preventDefault();
+
+    // reset show toast
+    setShowToast(false);
 
     const email = event.target.email.value;
     const password = event.target.password.value;
@@ -51,7 +56,6 @@ const FormCard = (props: { type: CardType }) => {
         ),
       });
 
-
       if (validationResult.isValid) {
         // submit form
         const userInput: UserInput = {
@@ -62,6 +66,7 @@ const FormCard = (props: { type: CardType }) => {
           if (!res.ok) {
             if (res.status === 409) {
               console.log("email is already in use");
+              setShowToast(true);
             }
           }
         });
@@ -70,38 +75,47 @@ const FormCard = (props: { type: CardType }) => {
   };
 
   return (
-    <form
-      className="flex justify-center items-center h-screen"
-      onSubmit={submit}
-    >
-      <div className="card w-96 bg-base-100 shadow-xl">
-        <div className="card-body">
-          <h2 className="card-title">
-            {props.type === CardType.SIGN_IN ? "Sign In" : "Sign Up"}
-          </h2>
-
-          <EmailInput isInvalid={isUserInputValid.email} />
-
-          <PasswordInput
-            type={PasswordType.PASSWORD}
-            isInvalid={isUserInputValid.password}
-          />
-
-          {props.type === CardType.SIGN_UP && (
-            <PasswordInput
-              type={PasswordType.CONFIRM_PASSWORD}
-              isInvalid={isUserInputValid.confirmPassword}
-            />
-          )}
-
-          <div className="card-actions justify-end">
-            <button className="btn btn-primary" type="submit">
+    <div>
+      <form
+        className="flex justify-center items-center h-screen"
+        onSubmit={submit}
+      >
+        <div className="card w-96 bg-base-100 shadow-xl">
+          <div className="card-body">
+            <h2 className="card-title">
               {props.type === CardType.SIGN_IN ? "Sign In" : "Sign Up"}
-            </button>
+            </h2>
+
+            <EmailInput isInvalid={isUserInputValid.email} />
+
+            <PasswordInput
+              type={PasswordType.PASSWORD}
+              isInvalid={isUserInputValid.password}
+            />
+
+            {props.type === CardType.SIGN_UP && (
+              <PasswordInput
+                type={PasswordType.CONFIRM_PASSWORD}
+                isInvalid={isUserInputValid.confirmPassword}
+              />
+            )}
+
+            <div className="card-actions justify-end">
+              <button className="btn btn-primary" type="submit">
+                {props.type === CardType.SIGN_IN ? "Sign In" : "Sign Up"}
+              </button>
+            </div>
           </div>
         </div>
-      </div>
-    </form>
+      </form>
+      {showToast && (
+        <div className="toast toast-center mb-10">
+          <div className="alert alert-error">
+            <span>Email is already in use.</span>
+          </div>
+        </div>
+      )}
+    </div>
   );
 };
 
