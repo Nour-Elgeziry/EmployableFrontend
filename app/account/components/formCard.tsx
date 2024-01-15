@@ -8,7 +8,7 @@ import {
   ValidationResult,
   ValidationError,
 } from "../utils/inputValidation";
-import { registerUser } from "../utils/routes";
+import { registerUser, loginUser } from "../utils/routes";
 
 export enum CardType {
   SIGN_IN = "signIn",
@@ -71,6 +71,21 @@ const FormCard = (props: { type: CardType }) => {
           }
         });
       }
+    } else {
+      // submit form
+      const userInput: UserInput = {
+        email: event.target.email.value,
+        password: event.target.password.value,
+      };
+
+      loginUser(userInput).then((res) => {
+        if (!res.ok) {
+          if (res.status === 401) {
+            console.log("invalid credentials");
+            setShowToast(true);
+          }
+        }
+      });
     }
   };
 
@@ -111,7 +126,12 @@ const FormCard = (props: { type: CardType }) => {
       {showToast && (
         <div className="toast toast-center mb-10">
           <div className="alert alert-error">
-            <span>Email is already in use.</span>
+            <span>
+              {props.type === CardType.SIGN_IN
+                ? "Invalid Credentials"
+                : "Email already in use"}
+              .
+            </span>
           </div>
         </div>
       )}

@@ -1,3 +1,5 @@
+"use client";
+
 import FormCard from "../components/formCard";
 import { CardType } from "../components/formCard";
 
