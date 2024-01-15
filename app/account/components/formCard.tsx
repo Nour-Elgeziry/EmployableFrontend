@@ -115,8 +115,19 @@ const FormCard = (props: { type: CardType }) => {
               />
             )}
 
+            <div className="card-actions justify-start">
+              <a
+                className="link text-xs"
+                href={props.type === CardType.SIGN_IN ? "/account/signup" : "/account/signin"}
+              >
+                {props.type === CardType.SIGN_IN
+                  ? "Don't have an account? Sign Up"
+                  : "Already have an account? Sign In"}
+              </a>
+            </div>
+
             <div className="card-actions justify-end">
-              <button className="btn btn-primary" type="submit">
+              <button className="btn btn-primary mt-5" type="submit">
                 {props.type === CardType.SIGN_IN ? "Sign In" : "Sign Up"}
               </button>
             </div>
