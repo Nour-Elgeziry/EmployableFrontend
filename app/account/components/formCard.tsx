@@ -118,7 +118,11 @@ const FormCard = (props: { type: CardType }) => {
             <div className="card-actions justify-start">
               <a
                 className="link text-xs"
-                href={props.type === CardType.SIGN_IN ? "/account/signup" : "/account/signin"}
+                href={
+                  props.type === CardType.SIGN_IN
+                    ? "/account/signup"
+                    : "/account/signin"
+                }
               >
                 {props.type === CardType.SIGN_IN
                   ? "Don't have an account? Sign Up"

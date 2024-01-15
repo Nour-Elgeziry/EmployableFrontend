@@ -34,7 +34,7 @@ const PasswordInput = (props: { type: PasswordType; isInvalid?: boolean }) => {
           className="input input-bordered w-full max-w-xs"
         />
         <button
-          className="absolute right-6 px-4 text-gray-600"
+          className="absolute right-6 px-4 text-gray-600" type="button"
           onClick={togglePasswordVisibility}
         >
           {isPasswordVisible ? (
