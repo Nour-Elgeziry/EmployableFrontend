@@ -1,12 +1,12 @@
 "use client";
 
-import FormCard from "../components/formCard";
-import { CardType } from "../components/formCard";
+import RegistrationFormCard from "../components/registrationFormCard";
+import { CardType } from "../components/registrationFormCard";
 
 const SignUp = () => {
   return (
     <div className="flex justify-center items-center h-screen">
-      <FormCard type={CardType.SIGN_UP} />
+      <RegistrationFormCard type={CardType.SIGN_UP} />
     </div>
   );
 };

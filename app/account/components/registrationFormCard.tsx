@@ -1,7 +1,7 @@
 import { useState } from "react";
 
-import EmailInput from "./emailInput";
-import PasswordInput, { PasswordType } from "./passwordInput";
+import EmailInput from "../UIComponents/emailInput";
+import PasswordInput, { PasswordType } from "../UIComponents/passwordInput";
 
 import {
   validateEmailAndConfirmPassword,
@@ -15,12 +15,12 @@ export enum CardType {
   SIGN_UP = "signUp",
 }
 
-export interface UserInput {
+export interface RegistrationUserInput {
   email: string;
   password: string;
 }
 
-const FormCard = (props: { type: CardType }) => {
+const RegistrationFormCard = (props: { type: CardType }) => {
   const [isUserInputValid, setIsUserInputValid] = useState({
     email: false,
     password: false,
@@ -58,7 +58,7 @@ const FormCard = (props: { type: CardType }) => {
 
       if (validationResult.isValid) {
         // submit form
-        const userInput: UserInput = {
+        const userInput: RegistrationUserInput = {
           email: event.target.email.value,
           password: event.target.password.value,
         };
@@ -68,24 +68,36 @@ const FormCard = (props: { type: CardType }) => {
               console.log("email is already in use");
               setShowToast(true);
             }
+          } else {
+            // redirect to login page
+            window.location.href = "/account/login";
           }
         });
       }
     } else {
       // submit form
-      const userInput: UserInput = {
+      const userInput: RegistrationUserInput = {
         email: event.target.email.value,
         password: event.target.password.value,
       };
 
-      loginUser(userInput).then((res) => {
-        if (!res.ok) {
-          if (res.status === 401) {
-            console.log("invalid credentials");
-            setShowToast(true);
+      loginUser(userInput)
+        .then(async (res) => {
+          if (!res.ok) {
+            if (res.status === 401) {
+              console.log("invalid credentials");
+              setShowToast(true);
+            }
+          } else {
+            const jsonBody = await res.json();
+            console.log(jsonBody);
+            const token = jsonBody.user.token;
+            // store token in local storage
+            localStorage.setItem("token", token);
+            // redirect to personal-info page
+            window.location.href = "/account/personalInformation";
           }
-        }
-      });
+        });
     }
   };
 
@@ -154,4 +166,4 @@ const FormCard = (props: { type: CardType }) => {
   );
 };
 
-export default FormCard;
+export default RegistrationFormCard;
