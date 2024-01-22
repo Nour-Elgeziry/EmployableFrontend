@@ -1,4 +1,7 @@
-import { TextInputField } from "../components/userInformationCard";
+export enum TextInputField {
+  NAME = "name",
+  AGE = "age",
+}
 
 const TextInput = (props: { title: String; type: TextInputField }) => {
   return (

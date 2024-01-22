@@ -1,8 +1,6 @@
-import TextInput from "../../UIComponents/textInput";
+import TextInput, { TextInputField } from "../../UIComponents/textInput";
 import CountryInput from "../../UIComponents/countryInput";
 // import PhoneNumberInput from "../../UIComponents/phoneNumberInput";
-
-import { TextInputField } from "../userInformationCard";
 
 const PersonalInformation = () => {
   return (

@@ -1,6 +1,9 @@
 import { useState } from "react";
 
-import { submitUserInformation } from "../utils/routes";
+import {
+  submitUserInformation,
+  submitCareerInformation,
+} from "../utils/routes";
 
 import PersonalInformation from "./userInformationBody/personalInformation";
 import CareerInformation from "./userInformationBody/careerInformation";
@@ -10,15 +13,18 @@ export enum CardType {
   CAREER = "career",
 }
 
-export enum TextInputField {
-  NAME = "name",
-  AGE = "age",
-}
-
 export interface InformationUserInput {
   name: string;
   age: string;
   country: string;
+}
+
+export interface CareerUserInput {
+  education: string;
+  experience: string;
+  seniority: string;
+  profession: string;
+  cv: File;
 }
 
 const UserInformationFormCard = (props: { type: CardType }) => {
@@ -42,6 +48,7 @@ const UserInformationFormCard = (props: { type: CardType }) => {
         userInput.country === ""
       ) {
         setShowToast(true);
+        return;
       }
 
       submitUserInformation(userInput).then((res) => {
@@ -49,7 +56,36 @@ const UserInformationFormCard = (props: { type: CardType }) => {
           console.log("error");
         } else {
           console.log("success");
-          // redirect to home page
+          // redirect to career information page
+          window.location.href = "/account/careerInformation";
+        }
+      });
+    } else {
+      const file = event.target.cv.files[0];
+      const userInput: CareerUserInput = {
+        education: event.target.education.value,
+        experience: event.target.experience.value,
+        seniority: event.target.seniority.value,
+        profession: event.target.profession.value,
+        cv: file,
+      };
+      if (
+        userInput.education === "" ||
+        userInput.experience === "" ||
+        userInput.seniority === "" ||
+        userInput.profession === "" ||
+        userInput.cv === undefined
+      ) {
+        setShowToast(true);
+        return;
+      }
+
+      submitCareerInformation(userInput).then((res) => {
+        if (!res.ok) {
+          console.log("error");
+        } else {
+          console.log("success");
+          // redirect to home
           window.location.href = "/";
         }
       });
