@@ -1,5 +1,7 @@
 import { useState } from "react";
 
+import checkLoginStatus from "@/app/middleware/checkLoginStatus";
+
 import {
   submitUserInformation,
   submitCareerInformation,
@@ -131,4 +133,4 @@ const UserInformationFormCard = (props: { type: CardType }) => {
   );
 };
 
-export default UserInformationFormCard;
+export default checkLoginStatus(UserInformationFormCard);
