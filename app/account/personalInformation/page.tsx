@@ -1,5 +1,7 @@
 "use client";
 
+import checkLoginStatus from "@/app/middleware/checkLoginStatus";
+
 import UserInformationFormCard from "../components/userInformationCard";
 import { CardType } from "../components/userInformationCard";
 
@@ -11,4 +13,4 @@ const PersonalInformation = () => {
   );
 };
 
-export default PersonalInformation;
+export default checkLoginStatus(PersonalInformation);

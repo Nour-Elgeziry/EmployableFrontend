@@ -1,4 +1,3 @@
-/* eslint-disable react/display-name */
 import { useEffect } from "react";
 
 const checkLoginStatus = (WrappedComponent: any) => {
