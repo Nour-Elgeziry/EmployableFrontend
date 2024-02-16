@@ -30,12 +30,12 @@ export interface CareerUserInput {
 }
 
 const UserInformationFormCard = (props: { type: CardType }) => {
-  const [showToast, setShowToast] = useState(false);
+  const [showToast, setShowToast] = useState({ show: false, message: "" });
 
   const submit = (event: any) => {
     event.preventDefault();
     // reset show toast
-    setShowToast(false);
+    setShowToast({ show: false, message: "" });
 
     if (props.type === CardType.PERSONAL) {
       const userInput: InformationUserInput = {
@@ -49,7 +49,7 @@ const UserInformationFormCard = (props: { type: CardType }) => {
         userInput.age === "" ||
         userInput.country === ""
       ) {
-        setShowToast(true);
+        setShowToast({ show: true, message: "Please fill in all fields" });
         return;
       }
 
@@ -78,10 +78,19 @@ const UserInformationFormCard = (props: { type: CardType }) => {
         userInput.profession === "" ||
         userInput.cv === undefined
       ) {
-        setShowToast(true);
+        setShowToast({ show: true, message: "Please fill in all fields" });
+        return;
+      } else if (
+        //check file size
+        file.size >
+        16 * 1024 * 1024
+      ) {
+        setShowToast({
+          show: true,
+          message: "File size must be less than 16MB",
+        });
         return;
       }
-
       submitCareerInformation(userInput).then((res) => {
         if (!res.ok) {
           console.log("error");
@@ -122,10 +131,10 @@ const UserInformationFormCard = (props: { type: CardType }) => {
           </div>
         </div>
       </form>
-      {showToast && (
+      {showToast.show && (
         <div className="toast toast-center mb-10">
           <div className="alert alert-error">
-            <span>Please complete all sections</span>
+            <span>{showToast.message}</span>
           </div>
         </div>
       )}
