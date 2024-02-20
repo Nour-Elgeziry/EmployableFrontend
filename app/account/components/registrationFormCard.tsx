@@ -1,7 +1,7 @@
 import { useState } from "react";
 
-import EmailInput from "../UIComponents/emailInput";
-import PasswordInput, { PasswordType } from "../UIComponents/passwordInput";
+import EmailInput from "./inputComponents/emailInput";
+import PasswordInput, { PasswordType } from "./inputComponents/passwordInput";
 
 import {
   validateEmailAndConfirmPassword,
@@ -81,23 +81,17 @@ const RegistrationFormCard = (props: { type: CardType }) => {
         password: event.target.password.value,
       };
 
-      loginUser(userInput)
-        .then(async (res) => {
-          if (!res.ok) {
-            if (res.status === 401) {
-              console.log("invalid credentials");
-              setShowToast(true);
-            }
-          } else {
-            const jsonBody = await res.json();
-            console.log(jsonBody);
-            const token = jsonBody.user.token;
-            // store token in local storage
-            localStorage.setItem("token", token);
-            // redirect to personal-info page
-            window.location.href = "/account/personalInformation";
+      loginUser(userInput).then(async (res) => {
+        if (!res.ok) {
+          if (res.status === 401) {
+            console.log("invalid credentials");
+            setShowToast(true);
           }
-        });
+        } else {
+          // redirect to personal-info page
+          window.location.href = "/account/personalInformation";
+        }
+      });
     }
   };
 

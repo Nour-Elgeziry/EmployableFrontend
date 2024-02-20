@@ -5,8 +5,8 @@ import {
   submitCareerInformation,
 } from "../utils/routes";
 
-import PersonalInformation from "./userInformationBody/personalInformation";
-import CareerInformation from "./userInformationBody/careerInformation";
+import PersonalInformation from "./userInformationCards/personalInformation";
+import CareerInformation from "./userInformationCards/careerInformation";
 
 export enum CardType {
   PERSONAL = "personal",

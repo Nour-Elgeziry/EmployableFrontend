@@ -1,8 +1,8 @@
-import OptionInput from "../../UIComponents/optionInput";
-import FileInput from "../../UIComponents/fileInput";
+import OptionInput from "../inputComponents/optionInput";
+import FileInput from "../inputComponents/fileInput";
 
-import { FileInputField } from "../../UIComponents/fileInput";
-import { OptionInputField } from "../../UIComponents/optionInput";
+import { FileInputField } from "../inputComponents/fileInput";
+import { OptionInputField } from "../inputComponents/optionInput";
 
 const CareerInformation = () => {
   const levelOfEducation = ["High School", "Bachelor", "Master", "PhD"];

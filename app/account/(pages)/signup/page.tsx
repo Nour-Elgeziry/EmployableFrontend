@@ -1,7 +1,7 @@
 "use client";
 
-import RegistrationFormCard from "../components/registrationFormCard";
-import { CardType } from "../components/registrationFormCard";
+import RegistrationFormCard from "../../components/registrationFormCard";
+import { CardType } from "../../components/registrationFormCard";
 
 const SignUp = () => {
   return (
