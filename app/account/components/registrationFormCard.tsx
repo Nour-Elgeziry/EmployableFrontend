@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 
 import EmailInput from "./inputComponents/emailInput";
 import PasswordInput, { PasswordType } from "./inputComponents/passwordInput";
@@ -21,6 +22,7 @@ export interface RegistrationUserInput {
 }
 
 const RegistrationFormCard = (props: { type: CardType }) => {
+  const router = useRouter();
   const [isUserInputValid, setIsUserInputValid] = useState({
     email: false,
     password: false,
@@ -70,7 +72,7 @@ const RegistrationFormCard = (props: { type: CardType }) => {
             }
           } else {
             // redirect to login page
-            window.location.href = "/account/login";
+            router.push("/account/signin");
           }
         });
       }
@@ -88,8 +90,28 @@ const RegistrationFormCard = (props: { type: CardType }) => {
             setShowToast(true);
           }
         } else {
-          // redirect to personal-info page
-          window.location.href = "/account/personalInformation";
+          // redirect to correct page based on user information
+          const response = await res.json();
+
+          switch (response.isPersonalInformationComplete) {
+            case true:
+              switch (response.isCareerInformationComplete) {
+                case true:
+                  router.push("/");
+                  break;
+                case false:
+                  router.push("/account/careerInformation");
+                  break;
+                default:
+                  break;
+              }
+              break;
+            case false:
+              router.push("/account/personalInformation");
+              break;
+            default:
+              break;
+          }
         }
       });
     }
