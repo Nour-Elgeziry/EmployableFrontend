@@ -1,9 +1,14 @@
 export enum TextInputField {
   NAME = "name",
   AGE = "age",
+  COMPANY = "company",
 }
 
-const TextInput = (props: { title: String; type: TextInputField }) => {
+const TextInput = (props: {
+  title: String;
+  type: TextInputField;
+  isInvalid?: boolean;
+}) => {
   return (
     <label className="form-control w-full max-w-xs">
       <div className="label">
@@ -25,6 +30,13 @@ const TextInput = (props: { title: String; type: TextInputField }) => {
         placeholder="Type here"
         className="input input-bordered w-full max-w-xs"
       />
+      {props.isInvalid && (
+        <div className="label">
+          <span className="label-text-alt text-red-500">
+            This field is required
+          </span>
+        </div>
+      )}
     </label>
   );
 };

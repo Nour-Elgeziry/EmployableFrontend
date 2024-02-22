@@ -2,6 +2,9 @@ export enum ValidationError {
   EMAIL = "email",
   PASSWORD = "password",
   CONFIRM_PASSWORD = "confirmPassword",
+  WEBSITE = "website",
+  NAME = "name",
+  COMPANY = "company",
   NULL = "null",
 }
 
@@ -17,6 +20,15 @@ function validateEmail(email: string): ValidationResult {
   return {
     isValid: re.test(email),
     error: ValidationError.EMAIL,
+  };
+}
+
+function validateWebsite(website: string): ValidationResult {
+  const regex =
+    /^(?:http(s)?:\/\/)?[\w.-]+(?:\.[\w\.-]+)+[\w\-\._~:/?#[\]@!\$&'\(\)\*\+,;=.]+$/;
+  return {
+    isValid: regex.test(website),
+    error: ValidationError.WEBSITE,
   };
 }
 
@@ -37,10 +49,13 @@ function validateConfirmPassword(
   };
 }
 
-export function validateEmailAndConfirmPassword(
+export function validateUserInput(
   email: string,
   password: string,
-  confirmPassword: string
+  confirmPassword: string,
+  name?: string,
+  company?: string,
+  website?: string
 ) {
   const emailValidation = validateEmail(email);
   const passwordValidation = validatePassword(password);
@@ -49,10 +64,43 @@ export function validateEmailAndConfirmPassword(
     confirmPassword
   );
 
+  const websiteValidation =
+    website != undefined
+      ? validateWebsite(website)
+      : {
+          isValid: true,
+          error: ValidationError.NULL,
+        };
+
+  const nameValidation =
+    name != undefined
+      ? {
+          isValid: name.length > 0,
+          error: ValidationError.NAME,
+        }
+      : {
+          isValid: true,
+          error: ValidationError.NAME,
+        };
+
+  const companyValidation =
+    company != undefined
+      ? {
+          isValid: company.length > 0,
+          error: ValidationError.COMPANY,
+        }
+      : {
+          isValid: true,
+          error: ValidationError.COMPANY,
+        };
+
   const result = [
     emailValidation,
     passwordValidation,
     confirmPasswordValidation,
+    websiteValidation,
+    nameValidation,
+    companyValidation,
   ];
 
   return {

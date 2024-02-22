@@ -1,11 +1,25 @@
-import { RegistrationUserInput } from "../components/registrationFormCard";
+import {
+  EmployeeRegistrationUserInput,
+  EmployerRegistrationUserInput,
+} from "../components/authorizationFormCard";
 import {
   CareerUserInput,
   InformationUserInput,
 } from "../components/userInformationCard";
 
-export function loginUser(userInput: RegistrationUserInput) {
+export function loginEmployee(userInput: EmployeeRegistrationUserInput) {
   return fetch("http://localhost:8080/user/login", {
+    method: "POST",
+    credentials: "include",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(userInput),
+  });
+}
+
+export function loginEmployer(userInput: EmployeeRegistrationUserInput) {
+  return fetch("http://localhost:8080/employer/login", {
     method: "POST",
     credentials: "include",
     headers: {
@@ -25,8 +39,18 @@ export function logoutUser() {
   });
 }
 
-export function registerUser(userInput: RegistrationUserInput) {
+export function registerEmployee(userInput: EmployeeRegistrationUserInput) {
   return fetch("http://localhost:8080/user/register", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(userInput),
+  });
+}
+
+export function registerEmployer(userInput: EmployerRegistrationUserInput) {
+  return fetch("http://localhost:8080/employer/register", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
