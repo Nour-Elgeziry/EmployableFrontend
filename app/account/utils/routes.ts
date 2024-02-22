@@ -1,14 +1,14 @@
 import {
   EmployeeRegistrationUserInput,
   EmployerRegistrationUserInput,
-} from "../components/authorizationFormCard";
+} from "../components/authorizationForm";
 import {
-  CareerUserInput,
-  InformationUserInput,
-} from "../components/userInformationCard";
+  EmployeeCareerInfo,
+  EmployeePersonalInfo,
+} from "../components/employeeInformation";
 
 export function loginEmployee(userInput: EmployeeRegistrationUserInput) {
-  return fetch("http://localhost:8080/user/login", {
+  return fetch("http://localhost:8080/employee/login", {
     method: "POST",
     credentials: "include",
     headers: {
@@ -29,8 +29,8 @@ export function loginEmployer(userInput: EmployeeRegistrationUserInput) {
   });
 }
 
-export function logoutUser() {
-  return fetch("http://localhost:8080/user/logout", {
+export function logoutEmployee() {
+  return fetch("http://localhost:8080/employee/logout", {
     method: "GET",
     credentials: "include",
     headers: {
@@ -40,7 +40,7 @@ export function logoutUser() {
 }
 
 export function registerEmployee(userInput: EmployeeRegistrationUserInput) {
-  return fetch("http://localhost:8080/user/register", {
+  return fetch("http://localhost:8080/employee/register", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -60,7 +60,7 @@ export function registerEmployer(userInput: EmployerRegistrationUserInput) {
 }
 
 export function checkUserLoggedIn() {
-  return fetch("http://localhost:8080/user/check-user-logged-in", {
+  return fetch("http://localhost:8080/employee/check-user-logged-in", {
     method: "GET",
     credentials: "include",
     headers: {
@@ -69,8 +69,8 @@ export function checkUserLoggedIn() {
   });
 }
 
-export function submitUserInformation(userInput: InformationUserInput) {
-  return fetch("http://localhost:8080/user/personal-info", {
+export function submitEmployeePersonalInformation(userInput: EmployeePersonalInfo) {
+  return fetch("http://localhost:8080/employee/personal-info", {
     method: "POST",
     credentials: "include",
     headers: {
@@ -80,7 +80,7 @@ export function submitUserInformation(userInput: InformationUserInput) {
   });
 }
 
-export function submitCareerInformation(userInput: CareerUserInput) {
+export function submitEmployeeCareerInformation(userInput: EmployeeCareerInfo) {
   const formData = new FormData();
   formData.append("education", userInput.education);
   formData.append("experience", userInput.experience);
@@ -88,7 +88,7 @@ export function submitCareerInformation(userInput: CareerUserInput) {
   formData.append("profession", userInput.profession);
   formData.append("cv", userInput.cv);
 
-  return fetch("http://localhost:8080/user/career-info", {
+  return fetch("http://localhost:8080/employee/career-info", {
     method: "POST",
     credentials: "include",
     headers: {},

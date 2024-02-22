@@ -5,7 +5,12 @@ import EmailInput from "./inputComponents/emailInput";
 import PasswordInput, { PasswordType } from "./inputComponents/passwordInput";
 
 import { validateUserInput, ValidationError } from "../utils/inputValidation";
-import { registerEmployee, registerEmployer, loginEmployee, loginEmployer } from "../utils/routes";
+import {
+  registerEmployee,
+  registerEmployer,
+  loginEmployee,
+  loginEmployer,
+} from "../utils/routes";
 import TextInput, { TextInputField } from "./inputComponents/textInput";
 import WebsiteInput from "./inputComponents/websiteInput";
 
@@ -64,7 +69,6 @@ const AuthorizationFormCard = (props: { type: CardType }) => {
 
     if (props.type === CardType.SIGN_UP) {
       // validate user input
-
       let validationResult;
 
       if (userType === UserType.EMPLOYER) {

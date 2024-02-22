@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { usePathname } from "next/navigation";
-import { checkUserLoggedIn, logoutUser } from "./utils/routes";
+import { checkUserLoggedIn, logoutEmployee } from "./utils/routes";
 
 export default function AccountLayout({
   children,
@@ -31,7 +31,7 @@ export default function AccountLayout({
         isLoggedIn && (
           <button
             onClick={() => {
-              logoutUser();
+              logoutEmployee();
               window.location.href = "/account/signin";
             }}
           >

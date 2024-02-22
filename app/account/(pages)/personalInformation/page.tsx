@@ -1,12 +1,12 @@
 "use client";
 
-import UserInformationFormCard from "../../components/userInformationCard";
-import { CardType } from "../../components/userInformationCard";
+import EmployeeInformationForm from "../../components/employeeInformation";
+import { CardType } from "../../components/employeeInformation";
 
 const PersonalInformation = () => {
   return (
     <div className="flex justify-center items-center h-screen">
-      <UserInformationFormCard type={CardType.PERSONAL} />
+      <EmployeeInformationForm type={CardType.PERSONAL} />
     </div>
   );
 };

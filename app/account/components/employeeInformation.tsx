@@ -1,25 +1,25 @@
 import { useState } from "react";
 
 import {
-  submitUserInformation,
-  submitCareerInformation,
+  submitEmployeePersonalInformation,
+  submitEmployeeCareerInformation,
 } from "../utils/routes";
 
-import PersonalInformation from "./userInformationCards/personalInformation";
-import CareerInformation from "./userInformationCards/careerInformation";
+import PersonalInformation from "./employeeInformationCards/personalInformation";
+import CareerInformation from "./employeeInformationCards/careerInformation";
 
 export enum CardType {
   PERSONAL = "personal",
   CAREER = "career",
 }
 
-export interface InformationUserInput {
+export interface EmployeePersonalInfo {
   name: string;
   age: string;
   country: string;
 }
 
-export interface CareerUserInput {
+export interface EmployeeCareerInfo {
   education: string;
   experience: string;
   seniority: string;
@@ -27,7 +27,7 @@ export interface CareerUserInput {
   cv: File;
 }
 
-const UserInformationFormCard = (props: { type: CardType }) => {
+const EmployeeInformationForm= (props: { type: CardType }) => {
   const [showToast, setShowToast] = useState({ show: false, message: "" });
 
   const submit = (event: any) => {
@@ -36,7 +36,7 @@ const UserInformationFormCard = (props: { type: CardType }) => {
     setShowToast({ show: false, message: "" });
 
     if (props.type === CardType.PERSONAL) {
-      const userInput: InformationUserInput = {
+      const userInput: EmployeePersonalInfo = {
         name: event.target.name.value,
         age: event.target.age.value,
         country: event.target.country.value,
@@ -51,7 +51,7 @@ const UserInformationFormCard = (props: { type: CardType }) => {
         return;
       }
 
-      submitUserInformation(userInput).then((res) => {
+      submitEmployeePersonalInformation(userInput).then((res) => {
         if (!res.ok) {
           console.log("error");
         } else {
@@ -62,7 +62,7 @@ const UserInformationFormCard = (props: { type: CardType }) => {
       });
     } else {
       const file = event.target.cv.files[0];
-      const userInput: CareerUserInput = {
+      const userInput: EmployeeCareerInfo = {
         education: event.target.education.value,
         experience: event.target.experience.value,
         seniority: event.target.seniority.value,
@@ -89,7 +89,7 @@ const UserInformationFormCard = (props: { type: CardType }) => {
         });
         return;
       }
-      submitCareerInformation(userInput).then((res) => {
+      submitEmployeeCareerInformation(userInput).then((res) => {
         if (!res.ok) {
           console.log("error");
         } else {
@@ -140,4 +140,4 @@ const UserInformationFormCard = (props: { type: CardType }) => {
   );
 };
 
-export default UserInformationFormCard;
+export default EmployeeInformationForm;

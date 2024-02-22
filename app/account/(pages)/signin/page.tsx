@@ -1,7 +1,7 @@
 "use client";
 
-import AuthorizationFormCard from "../../components/authorizationFormCard";
-import { CardType } from "../../components/authorizationFormCard";
+import AuthorizationFormCard from "../../components/authorizationForm";
+import { CardType } from "../../components/authorizationForm";
 
 const SignIn = () => {
   return (
