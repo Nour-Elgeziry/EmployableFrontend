@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { usePathname } from "next/navigation";
-import { checkUserLoggedIn, logoutEmployee } from "./utils/routes";
+import { checkUserLoggedIn, logoutUser } from "./utils/routes";
 
 export default function AccountLayout({
   children,
@@ -14,12 +14,16 @@ export default function AccountLayout({
 
   useEffect(() => {
     if (pathname !== "/account/signin" && pathname !== "/account/signup") {
-      checkUserLoggedIn().then((response) => {
-        if (response.ok) {
-          setIsLoggedIn(true);
-        } else {
+      checkUserLoggedIn().then(async (response) => {
+        if (!response.ok) {
           window.location.href = "/account/signin";
+          return;
         }
+
+        const res = await response.json();
+        if (res.role === "employer") {
+          window.location.href = "/";
+        } else setIsLoggedIn(true);
       });
     }
   }, [pathname]);
@@ -31,7 +35,7 @@ export default function AccountLayout({
         isLoggedIn && (
           <button
             onClick={() => {
-              logoutEmployee();
+              logoutUser();
               window.location.href = "/account/signin";
             }}
           >

@@ -29,8 +29,8 @@ export function loginEmployer(userInput: EmployeeRegistrationUserInput) {
   });
 }
 
-export function logoutEmployee() {
-  return fetch("http://localhost:8080/employee/logout", {
+export function logoutUser() {
+  return fetch("http://localhost:8080/user/logout", {
     method: "GET",
     credentials: "include",
     headers: {
@@ -60,7 +60,7 @@ export function registerEmployer(userInput: EmployerRegistrationUserInput) {
 }
 
 export function checkUserLoggedIn() {
-  return fetch("http://localhost:8080/employee/check-user-logged-in", {
+  return fetch("http://localhost:8080/user/check-user-logged-in", {
     method: "GET",
     credentials: "include",
     headers: {
@@ -69,7 +69,9 @@ export function checkUserLoggedIn() {
   });
 }
 
-export function submitEmployeePersonalInformation(userInput: EmployeePersonalInfo) {
+export function submitEmployeePersonalInformation(
+  userInput: EmployeePersonalInfo
+) {
   return fetch("http://localhost:8080/employee/personal-info", {
     method: "POST",
     credentials: "include",
