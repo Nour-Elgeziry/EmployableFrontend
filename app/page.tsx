@@ -23,12 +23,12 @@ export default function Home() {
           {/* Sign in and Sign Up Buttons */}
           <div className="flex gap-4 justify-end">
             <Link href="/account/signin">
-              <button className="btn bg-green-500 hover:bg-green-600">
+              <button className="btn bg-green-500 hover:bg-green-600 dark:bg-green-800 hover:dark:bg-green-600 border-0">
                 Sign in
               </button>
             </Link>
             <Link href="/account/signup">
-              <button className="btn bg-blue-500 hover:bg-blue-600">
+              <button className="btn bg-blue-500 hover:bg-blue-600 dark:bg-blue-800 border-0">
                 Sign Up
               </button>
             </Link>
@@ -40,7 +40,7 @@ export default function Home() {
         <div className="container px-4 md:px-6">
           {/* Title Section */}
           <div className="flex flex-col items-center justify-center text-center space-y-4 mb-12">
-            <h2 className="text-3xl font-bold tracking-tighter sm:text-5xl text-blue-200 dark:text-blue-800">
+            <h2 className="text-3xl font-bold tracking-tighter sm:text-5xl text-blue-200 dark:text-blue-200">
               <span className="block">Revolutionizing Job Seeking</span>
             </h2>
           </div>
@@ -49,10 +49,10 @@ export default function Home() {
             <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
               {/* Employer Section */}
               <div className="bg-[F0F5F9] rounded-lg shadow-md p-6 flex flex-col justify-center">
-                <h2 className="text-gray-900 font-bold text-xl mb-4">
+                <h2 className="text-gray-900 dark:text-gray-200 font-bold text-xl mb-4">
                   Employer looking for talent?
                 </h2>
-                <p className="text-gray-700">
+                <p className="text-gray-700 dark:text-gray-400">
                   Welcome to our revolutionary platform where employers take the
                   reins in the job search process. Say goodbye to sifting
                   through endless applications – now, you are in control.
@@ -60,10 +60,10 @@ export default function Home() {
               </div>
               {/* Job Seeker Section */}
               <div className="bg-[FDF2E9] rounded-lg shadow-md p-6 flex flex-col justify-center lg:ml-auto lg:mr-auto">
-                <h2 className="text-gray-900 font-bold text-xl mb-4">
+                <h2 className="text-gray-900 dark:text-gray-200 font-bold text-xl mb-4">
                   Job seeker looking for work?
                 </h2>
-                <p className="text-gray-700">
+                <p className="text-gray-700 dark:text-gray-400">
                   Are you tired of the traditional job hunt? Take charge of your
                   career journey with us. No more mass applications, just
                   opportunities tailored to your skills and aspirations.
