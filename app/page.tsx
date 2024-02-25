@@ -5,7 +5,7 @@ export default function Home() {
   return (
     <main className="bg-white dark:bg-gray-900">
       {/* Header Section */}
-      <header className="flex items-center justify-between h-16 px-4 shrink-0 md:px-6 bg-gradient-to-r from-blue-500 to-green-500 dark:from-blue-900 dark:to-gray-800">
+      <header className="flex items-center justify-between h-16 px-4 shrink-0 md:px-6 bg-gradient-to-r from-blue-500 to-teal-400 dark:from-blue-900 dark:to-gray-800">
         {/* Navigation */}
         <nav className="w-full justify-between  gap-6 text-lg font-medium md:flex md:flex-row md:items-center md:gap-5 md:text-sm lg:gap-6">
           {/* Logo */}
@@ -48,7 +48,7 @@ export default function Home() {
           <div className="grid items-center justify-center gap-6">
             <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
               {/* Employer Section */}
-              <div className="bg-[F0F5F9] rounded-lg shadow-md border border-gray-200 p-6 flex flex-col justify-center">
+              <div className="bg-[F0F5F9] rounded-lg shadow-md p-6 flex flex-col justify-center">
                 <h2 className="text-gray-900 font-bold text-xl mb-4">
                   Employer looking for talent?
                 </h2>
@@ -59,7 +59,7 @@ export default function Home() {
                 </p>
               </div>
               {/* Job Seeker Section */}
-              <div className="bg-[FDF2E9] rounded-lg shadow-md border border-gray-200 p-6 flex flex-col justify-center lg:ml-auto lg:mr-auto">
+              <div className="bg-[FDF2E9] rounded-lg shadow-md p-6 flex flex-col justify-center lg:ml-auto lg:mr-auto">
                 <h2 className="text-gray-900 font-bold text-xl mb-4">
                   Job seeker looking for work?
                 </h2>

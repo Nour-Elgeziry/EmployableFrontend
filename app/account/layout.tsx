@@ -29,7 +29,7 @@ export default function AccountLayout({
   }, [pathname]);
 
   return (
-    <div>
+    <div className="bg-gradient-to-br from-blue-500 to-green-500 dark:from-blue-900 dark:to-gray-800">
       {pathname !== "/account/signin" &&
         pathname !== "/account/signup" &&
         isLoggedIn && (
