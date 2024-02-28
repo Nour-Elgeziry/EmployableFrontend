@@ -30,18 +30,6 @@ export default function AccountLayout({
 
   return (
     <div className="bg-gradient-to-br from-blue-500 to-green-500 dark:from-blue-900 dark:to-gray-800">
-      {pathname !== "/account/signin" &&
-        pathname !== "/account/signup" &&
-        isLoggedIn && (
-          <button
-            onClick={() => {
-              logoutUser();
-              window.location.href = "/account/signin";
-            }}
-          >
-            Logout
-          </button>
-        )}
       {(pathname === "/account/signin" ||
         pathname === "/account/signup" ||
         isLoggedIn) && <>{children}</>}

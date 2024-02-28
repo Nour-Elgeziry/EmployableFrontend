@@ -29,16 +29,6 @@ export function loginEmployer(userInput: EmployeeRegistrationUserInput) {
   });
 }
 
-export function logoutUser() {
-  return fetch("http://localhost:8080/user/logout", {
-    method: "GET",
-    credentials: "include",
-    headers: {
-      "Content-Type": "application/json",
-    },
-  });
-}
-
 export function registerEmployee(userInput: EmployeeRegistrationUserInput) {
   return fetch("http://localhost:8080/employee/register", {
     method: "POST",
@@ -56,6 +46,16 @@ export function registerEmployer(userInput: EmployerRegistrationUserInput) {
       "Content-Type": "application/json",
     },
     body: JSON.stringify(userInput),
+  });
+}
+
+export function logoutUser() {
+  return fetch("http://localhost:8080/user/logout", {
+    method: "GET",
+    credentials: "include",
+    headers: {
+      "Content-Type": "application/json",
+    },
   });
 }
 

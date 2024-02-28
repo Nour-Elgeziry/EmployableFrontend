@@ -1,7 +1,20 @@
+"use client";
+
 import Link from "next/link";
 import Image from "next/image";
 
+import { useEffect, useState } from "react";
+import { checkUserLoggedIn, logoutUser } from "./account/utils/routes";
+
 export default function Home() {
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+  useEffect(() => {
+    checkUserLoggedIn().then(async (res) => {
+      if (res.ok) setIsLoggedIn(true);
+      else setIsLoggedIn(false);
+    });
+  }, []);
   return (
     <main className="bg-white dark:bg-gray-900">
       {/* Header Section */}
@@ -22,16 +35,31 @@ export default function Home() {
           </Link>
           {/* Sign in and Sign Up Buttons */}
           <div className="flex gap-4 justify-end">
-            <Link href="/account/signin">
-              <button className="btn bg-green-500 hover:bg-green-600 dark:bg-green-800 hover:dark:bg-green-600 border-0">
-                Sign in
-              </button>
-            </Link>
-            <Link href="/account/signup">
-              <button className="btn bg-blue-500 hover:bg-blue-600 dark:bg-blue-800 border-0">
-                Sign Up
-              </button>
-            </Link>
+            {isLoggedIn ? (
+              <>
+                <Link href="/account/signin">
+                  <button
+                    onClick={logoutUser}
+                    className="btn bg-blue-500 hover:bg-blue-600 dark:bg-blue-800 border-0"
+                  >
+                    Sign out
+                  </button>
+                </Link>
+              </>
+            ) : (
+              <>
+                <Link href="/account/signin">
+                  <button className="btn bg-green-500 hover:bg-green-600 dark:bg-green-800 hover:dark:bg-green-600 border-0">
+                    Sign in
+                  </button>
+                </Link>
+                <Link href="/account/signup">
+                  <button className="btn bg-blue-500 hover:bg-blue-600 dark:bg-blue-800 border-0">
+                    Sign Up
+                  </button>
+                </Link>
+              </>
+            )}
           </div>
         </nav>
       </header>
