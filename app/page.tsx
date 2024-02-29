@@ -4,7 +4,7 @@ import Link from "next/link";
 import Image from "next/image";
 
 import { useEffect, useState } from "react";
-import { checkUserLoggedIn, logoutUser } from "./account/utils/routes";
+import { checkUserLoggedIn, logoutUser } from "./routes";
 
 export default function Home() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);

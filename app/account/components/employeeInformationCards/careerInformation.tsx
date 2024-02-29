@@ -38,7 +38,7 @@ const CareerInformation = () => {
       />
       <OptionInput
         title="What is your field of study?"
-        type={OptionInputField.PROFESSION}
+        type={OptionInputField.TITLE}
         options={fieldOfStudy}
         allowMultiple={false}
       />

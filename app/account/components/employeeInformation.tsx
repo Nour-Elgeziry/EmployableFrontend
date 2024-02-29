@@ -3,7 +3,7 @@ import { useState } from "react";
 import {
   submitEmployeePersonalInformation,
   submitEmployeeCareerInformation,
-} from "../utils/routes";
+} from "../../routes";
 
 import PersonalInformation from "./employeeInformationCards/personalInformation";
 import CareerInformation from "./employeeInformationCards/careerInformation";
@@ -23,11 +23,11 @@ export interface EmployeeCareerInfo {
   education: string;
   experience: string;
   seniority: string;
-  profession: string;
+  title: string;
   cv: File;
 }
 
-const EmployeeInformationForm= (props: { type: CardType }) => {
+const EmployeeInformationForm = (props: { type: CardType }) => {
   const [showToast, setShowToast] = useState({ show: false, message: "" });
 
   const submit = (event: any) => {
@@ -66,14 +66,14 @@ const EmployeeInformationForm= (props: { type: CardType }) => {
         education: event.target.education.value,
         experience: event.target.experience.value,
         seniority: event.target.seniority.value,
-        profession: event.target.profession.value,
+        title: event.target.title.value,
         cv: file,
       };
       if (
         userInput.education === "" ||
         userInput.experience === "" ||
         userInput.seniority === "" ||
-        userInput.profession === "" ||
+        userInput.title === "" ||
         userInput.cv === undefined
       ) {
         setShowToast({ show: true, message: "Please fill in all fields" });

@@ -19,7 +19,9 @@ export default function RootLayout({
       <head>
         <link rel="icon" href="/logo.png" />
       </head>
-      <body className={inter.className}>{children}</body>
+      <body className="bg-gradient-to-br from-blue-500 to-green-500 dark:from-blue-900 dark:to-gray-800 min-h-screen">
+        {children}
+      </body>
     </html>
   );
 }

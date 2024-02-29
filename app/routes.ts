@@ -1,11 +1,21 @@
 import {
   EmployeeRegistrationUserInput,
   EmployerRegistrationUserInput,
-} from "../components/authorizationForm";
+} from "./account/components/authorizationForm";
 import {
   EmployeeCareerInfo,
   EmployeePersonalInfo,
-} from "../components/employeeInformation";
+} from "./account/components/employeeInformation";
+
+export function getAllEmployees() {
+  return fetch("http://localhost:8080/employee/get-all", {
+    method: "GET",
+    credentials: "include",
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
+}
 
 export function loginEmployee(userInput: EmployeeRegistrationUserInput) {
   return fetch("http://localhost:8080/employee/login", {
@@ -87,7 +97,7 @@ export function submitEmployeeCareerInformation(userInput: EmployeeCareerInfo) {
   formData.append("education", userInput.education);
   formData.append("experience", userInput.experience);
   formData.append("seniority", userInput.seniority);
-  formData.append("profession", userInput.profession);
+  formData.append("title", userInput.title);
   formData.append("cv", userInput.cv);
 
   return fetch("http://localhost:8080/employee/career-info", {

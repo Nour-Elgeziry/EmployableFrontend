@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { usePathname } from "next/navigation";
-import { checkUserLoggedIn, logoutUser } from "./utils/routes";
+import { checkUserLoggedIn } from "../routes";
 
 export default function AccountLayout({
   children,
@@ -29,7 +29,7 @@ export default function AccountLayout({
   }, [pathname]);
 
   return (
-    <div className="bg-gradient-to-br from-blue-500 to-green-500 dark:from-blue-900 dark:to-gray-800">
+    <div>
       {(pathname === "/account/signin" ||
         pathname === "/account/signup" ||
         isLoggedIn) && <>{children}</>}

@@ -10,7 +10,7 @@ import {
   registerEmployer,
   loginEmployee,
   loginEmployer,
-} from "../utils/routes";
+} from "../../routes";
 import TextInput, { TextInputField } from "./inputComponents/textInput";
 import WebsiteInput from "./inputComponents/websiteInput";
 

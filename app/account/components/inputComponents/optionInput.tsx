@@ -2,7 +2,7 @@ export enum OptionInputField {
   EDUCATION = "education",
   EXPERIENCE = "experience",
   SENIORITY = "seniority",
-  PROFESSION = "profession",
+  TITLE = "title",
 }
 
 const OptionInput = (props: {
