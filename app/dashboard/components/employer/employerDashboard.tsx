@@ -1,8 +1,11 @@
-'use client';
+"use client";
 
 import { useState, useEffect } from "react";
+
 import EmployeeCard from "./components/employeeCard";
 import FilterBar from "./components/filterBar";
+import NavBar from "./components/navBar";
+
 import { Employee } from "./components/employeeCard";
 import { getAllEmployees } from "../../../routes";
 
@@ -67,7 +70,10 @@ const EmployerDashboard = () => {
 
   return (
     <div>
-      <div className="min-w-full flex justify-center">
+      <div>
+        <NavBar />
+      </div>
+      <div className="min-w-full flex justify-center mt-16 sticky top-4 z-10">
         <FilterBar
           setFilter={(type: string, value: string | undefined) =>
             setFilters((prevFilters) => ({
