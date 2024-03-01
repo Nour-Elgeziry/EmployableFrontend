@@ -1,4 +1,4 @@
-"use client";
+'use client';
 
 import { useState, useEffect } from "react";
 import EmployeeCard from "./components/employeeCard";
@@ -8,6 +8,7 @@ import { getAllEmployees } from "../../../routes";
 
 const EmployerDashboard = () => {
   const [employees, setEmployees] = useState<Employee[]>([]);
+  const [filteredEmployees, setFilteredEmployees] = useState<Employee[]>([]);
   const [filters, setFilters] = useState({
     education: undefined,
     title: undefined,
@@ -24,19 +25,51 @@ const EmployerDashboard = () => {
         }
         const employeesData: Employee[] = await res.json();
         setEmployees(employeesData);
+        setFilteredEmployees(employeesData); // Initialize filtered list with all employees
       } catch (error) {
         console.error("Error fetching employees:", error);
       }
     };
 
     fetchData();
-  }, []); // Empty dependency array ensures the effect runs only once on mount
+  }, []);
+
+  // Apply filters incrementally
+  useEffect(() => {
+    let filteredData = employees;
+
+    if (filters.education) {
+      filteredData = filteredData.filter(
+        (employee) => employee.education === filters.education
+      );
+    }
+
+    if (filters.title) {
+      filteredData = filteredData.filter(
+        (employee) => employee.title === filters.title
+      );
+    }
+
+    if (filters.experience) {
+      filteredData = filteredData.filter(
+        (employee) => employee.experience === filters.experience
+      );
+    }
+
+    if (filters.seniority) {
+      filteredData = filteredData.filter(
+        (employee) => employee.seniority === filters.seniority
+      );
+    }
+
+    setFilteredEmployees(filteredData);
+  }, [employees, filters]);
 
   return (
     <div>
-      <div className="min-w-full">
+      <div className="min-w-full flex justify-center">
         <FilterBar
-          setFilter={(type: string, value: string) =>
+          setFilter={(type: string, value: string | undefined) =>
             setFilters((prevFilters) => ({
               ...prevFilters,
               [type]: value,
@@ -50,7 +83,7 @@ const EmployerDashboard = () => {
       </div>
 
       <div className="flex flex-col items-center">
-        {employees.map((employee: Employee, index: number) => (
+        {filteredEmployees.map((employee: Employee, index: number) => (
           <EmployeeCard key={index} employee={employee} />
         ))}
       </div>

@@ -1,16 +1,17 @@
 import { useState } from "react";
 
 const FilterBar = (props: {
-  setFilter: (type: string, value: string) => void;
+  setFilter: (type: string, value: string | undefined) => void;
   education?: string;
   experience?: string;
   seniority?: string;
   title?: string;
 }) => {
-  const education = ["High School", "Bachelor", "Masters", "PhD"];
-  const experience = ["0-2", "2-5", "5-10", "10+"];
-  const seniority = ["Intern", "Entry", "Mid", "Senior"];
+  const education = ["All", "High School", "Bachelor", "Master", "PhD"];
+  const experience = ["All", "0-2", "2-5", "5-10", "10+"];
+  const seniority = ["All", "Intern", "Entry", "Mid", "Senior"];
   const title = [
+    "All",
     "Computer Science",
     "Electrical Engineering",
     "Mechanical Engineering",
@@ -29,7 +30,9 @@ const FilterBar = (props: {
               <li key={educationItem}>
                 <a
                   onClick={() => {
-                    props.setFilter("education", educationItem);
+                    if (educationItem === "All") {
+                      props.setFilter("education", undefined);
+                    } else props.setFilter("education", educationItem);
                   }}
                 >
                   {educationItem}
@@ -47,7 +50,9 @@ const FilterBar = (props: {
               <li key={title}>
                 <a
                   onClick={() => {
-                    props.setFilter("title", title);
+                    if (title === "All") {
+                      props.setFilter("title", undefined);
+                    } else props.setFilter("title", title);
                   }}
                 >
                   {title}
@@ -65,7 +70,9 @@ const FilterBar = (props: {
               <li key={experience}>
                 <a
                   onClick={() => {
-                    props.setFilter("experience", experience);
+                    if (experience === "All") {
+                      props.setFilter("experience", undefined);
+                    } else props.setFilter("experience", experience);
                   }}
                 >
                   {experience}
@@ -83,7 +90,9 @@ const FilterBar = (props: {
               <li key={seniority}>
                 <a
                   onClick={() => {
-                    props.setFilter("seniority", seniority);
+                    if (seniority === "All") {
+                      props.setFilter("seniority", undefined);
+                    } else props.setFilter("seniority", seniority);
                   }}
                 >
                   {seniority}
