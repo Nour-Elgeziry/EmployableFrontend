@@ -156,11 +156,11 @@ const AuthorizationFormCard = (props: { type: CardType }) => {
             }
           } else {
             const response = await res.json();
+            // store the user object in local storage
+            const userObj = JSON.stringify(response);
+            localStorage.setItem("user", userObj);
 
-            // store role in local storage
-            localStorage.setItem("role", response.role);
-
-            router.push("/");
+            router.push("/dashboard");
           }
         });
       } else {
@@ -174,14 +174,15 @@ const AuthorizationFormCard = (props: { type: CardType }) => {
             // redirect to correct page based on user information
             const response = await res.json();
 
-            // store role in local storage
-            localStorage.setItem("role", response.role);
+            // store the user object in local storage
+            const userObj = JSON.stringify(response);
+            localStorage.setItem("user", userObj);
 
             switch (response.isPersonalInformationComplete) {
               case true:
                 switch (response.isCareerInformationComplete) {
                   case true:
-                    router.push("/");
+                    router.push("/dashboard");
                     break;
                   case false:
                     router.push("/account/careerInformation");

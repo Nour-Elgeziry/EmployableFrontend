@@ -3,11 +3,13 @@
 import Link from "next/link";
 import Image from "next/image";
 
-import { useState } from "react";
 import { logoutUser } from "./routes";
 
 export default function Home() {
-  const [isLoggedIn, setIsLoggedIn] = useState(localStorage.getItem("role"));
+
+  // get user role from local storage
+  const userObj = localStorage.getItem("user");
+  const role = userObj ? JSON.parse(userObj).role : null;
 
   return (
     <main className="bg-white dark:bg-gray-900">
@@ -29,13 +31,13 @@ export default function Home() {
           </Link>
           {/* Sign in and Sign Up Buttons */}
           <div className="flex gap-4 justify-end">
-            {isLoggedIn ? (
+            {role ? (
               <>
                 <Link href="/account/signin">
                   <button
                     onClick={() => {
-                      // clear local storage role
-                      localStorage.removeItem("role");
+                      // clear local storage user
+                      localStorage.removeItem("user");
                       logoutUser;
                     }}
                     className="btn bg-blue-500 hover:bg-blue-600 dark:bg-blue-800 border-0"

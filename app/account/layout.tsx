@@ -14,12 +14,14 @@ export default function AccountLayout({
 
   useEffect(() => {
     if (pathname !== "/account/signin" && pathname !== "/account/signup") {
-      if (localStorage.getItem("role") === null) {
+      if (localStorage.getItem("user") === null) {
         window.location.href = "/account/signin";
         return;
       }
+      const user = JSON.parse(localStorage.getItem("user")!);
+      
 
-      if (localStorage.getItem("role") === "employer") {
+      if (user.role === "employer") {
         window.location.href = "/";
       } else setIsLoggedIn(true);
     }
