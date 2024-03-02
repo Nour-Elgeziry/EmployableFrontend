@@ -148,13 +148,18 @@ const AuthorizationFormCard = (props: { type: CardType }) => {
       };
 
       if (userType === UserType.EMPLOYER) {
-        loginEmployer(userInput).then((res) => {
+        loginEmployer(userInput).then(async (res) => {
           if (!res.ok) {
             if (res.status === 401) {
               console.log("invalid credentials");
               setShowToast(true);
             }
           } else {
+            const response = await res.json();
+
+            // store role in local storage
+            localStorage.setItem("role", response.role);
+
             router.push("/");
           }
         });
@@ -168,6 +173,9 @@ const AuthorizationFormCard = (props: { type: CardType }) => {
           } else {
             // redirect to correct page based on user information
             const response = await res.json();
+
+            // store role in local storage
+            localStorage.setItem("role", response.role);
 
             switch (response.isPersonalInformationComplete) {
               case true:

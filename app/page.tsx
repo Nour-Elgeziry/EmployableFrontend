@@ -3,18 +3,12 @@
 import Link from "next/link";
 import Image from "next/image";
 
-import { useEffect, useState } from "react";
-import { checkUserLoggedIn, logoutUser } from "./routes";
+import { useState } from "react";
+import { logoutUser } from "./routes";
 
 export default function Home() {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(localStorage.getItem("role"));
 
-  useEffect(() => {
-    checkUserLoggedIn().then(async (res) => {
-      if (res.ok) setIsLoggedIn(true);
-      else setIsLoggedIn(false);
-    });
-  }, []);
   return (
     <main className="bg-white dark:bg-gray-900">
       {/* Header Section */}
@@ -39,7 +33,11 @@ export default function Home() {
               <>
                 <Link href="/account/signin">
                   <button
-                    onClick={logoutUser}
+                    onClick={() => {
+                      // clear local storage role
+                      localStorage.removeItem("role");
+                      logoutUser;
+                    }}
                     className="btn bg-blue-500 hover:bg-blue-600 dark:bg-blue-800 border-0"
                   >
                     Sign out

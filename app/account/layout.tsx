@@ -14,17 +14,14 @@ export default function AccountLayout({
 
   useEffect(() => {
     if (pathname !== "/account/signin" && pathname !== "/account/signup") {
-      checkUserLoggedIn().then(async (response) => {
-        if (!response.ok) {
-          window.location.href = "/account/signin";
-          return;
-        }
+      if (localStorage.getItem("role") === null) {
+        window.location.href = "/account/signin";
+        return;
+      }
 
-        const res = await response.json();
-        if (res.role === "employer") {
-          window.location.href = "/";
-        } else setIsLoggedIn(true);
-      });
+      if (localStorage.getItem("role") === "employer") {
+        window.location.href = "/";
+      } else setIsLoggedIn(true);
     }
   }, [pathname]);
 
