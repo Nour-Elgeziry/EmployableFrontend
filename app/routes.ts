@@ -1,11 +1,8 @@
 import {
-  EmployeeRegistrationUserInput,
-  EmployerRegistrationUserInput,
-} from "./account/components/authorizationForm";
-import {
   EmployeeCareerInfo,
   EmployeePersonalInfo,
 } from "./account/components/employeeInformation";
+import { EmployeeRegistrationUserInput, EmployerRegistrationUserInput } from "./account/types";
 
 export function getAllEmployees() {
   return fetch("http://localhost:8080/employee/get-all", {
@@ -17,8 +14,8 @@ export function getAllEmployees() {
   });
 }
 
-export function loginEmployee(userInput: EmployeeRegistrationUserInput) {
-  return fetch("http://localhost:8080/employee/login", {
+export function signInEmployee(userInput: EmployeeRegistrationUserInput) {
+  return fetch("http://localhost:8080/employee/signIn", {
     method: "POST",
     credentials: "include",
     headers: {
@@ -28,8 +25,8 @@ export function loginEmployee(userInput: EmployeeRegistrationUserInput) {
   });
 }
 
-export function loginEmployer(userInput: EmployeeRegistrationUserInput) {
-  return fetch("http://localhost:8080/employer/login", {
+export function signInEmployer(userInput: EmployeeRegistrationUserInput) {
+  return fetch("http://localhost:8080/employer/signIn", {
     method: "POST",
     credentials: "include",
     headers: {
@@ -39,8 +36,8 @@ export function loginEmployer(userInput: EmployeeRegistrationUserInput) {
   });
 }
 
-export function registerEmployee(userInput: EmployeeRegistrationUserInput) {
-  return fetch("http://localhost:8080/employee/register", {
+export function signUpEmployee(userInput: EmployeeRegistrationUserInput) {
+  return fetch("http://localhost:8080/employee/signUp", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -49,8 +46,8 @@ export function registerEmployee(userInput: EmployeeRegistrationUserInput) {
   });
 }
 
-export function registerEmployer(userInput: EmployerRegistrationUserInput) {
-  return fetch("http://localhost:8080/employer/register", {
+export function signUpEmployer(userInput: EmployerRegistrationUserInput) {
+  return fetch("http://localhost:8080/employer/signUp", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",

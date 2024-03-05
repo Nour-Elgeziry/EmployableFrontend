@@ -1,6 +1,7 @@
 import Link from "next/link";
 import Image from "next/image";
 
+import { logoutUser } from "@/app/routes";
 const NavBar = () => {
   return (
     <div className="navbar h-0 bg-gradient-to-r from-blue-500 to-teal-400 dark:from-blue-900 dark:to-gray-800">
@@ -60,11 +61,14 @@ const NavBar = () => {
       <div className="navbar-center hidden lg:flex">
         <ul className="menu menu-horizontal px-1">
           <li>
-            <a>Item 1</a>
+            <a>Shortlisted</a>
+          </li>
+          <li>
+            <a>Contacted</a>
           </li>
           <li>
             <details>
-              <summary>Parent</summary>
+              <summary>Settings</summary>
               <ul className="p-2">
                 <li>
                   <a>Submenu 1</a>
@@ -75,13 +79,19 @@ const NavBar = () => {
               </ul>
             </details>
           </li>
-          <li>
-            <a>Item 3</a>
-          </li>
+          
         </ul>
       </div>
       <div className="navbar-end">
-        <a className="btn">Button</a>
+        <a
+          onClick={() => {
+            localStorage.removeItem("user");
+            logoutUser();
+          }}
+          className="btn"
+        >
+          Sign Out
+        </a>
       </div>
     </div>
   );

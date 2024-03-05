@@ -5,36 +5,23 @@ import EmailInput from "./inputComponents/emailInput";
 import PasswordInput, { PasswordType } from "./inputComponents/passwordInput";
 
 import { validateUserInput, ValidationError } from "../utils/inputValidation";
+
 import {
-  registerEmployee,
-  registerEmployer,
-  loginEmployee,
-  loginEmployer,
+  signUpEmployee,
+  signUpEmployer,
+  signInEmployee,
+  signInEmployer,
 } from "../../routes";
+
 import TextInput, { TextInputField } from "./inputComponents/textInput";
 import WebsiteInput from "./inputComponents/websiteInput";
 
-export enum CardType {
-  SIGN_IN = "signIn",
-  SIGN_UP = "signUp",
-}
-
-export interface EmployeeRegistrationUserInput {
-  email: string;
-  password: string;
-}
-
-export interface EmployerRegistrationUserInput
-  extends EmployeeRegistrationUserInput {
-  name: string;
-  company: string;
-  website: string;
-}
-
-enum UserType {
-  EMPLOYEE = "employee",
-  EMPLOYER = "employer",
-}
+import {
+  CardType,
+  EmployeeRegistrationUserInput,
+  EmployerRegistrationUserInput,
+  UserType,
+} from "../types";
 
 const AuthorizationFormCard = (props: { type: CardType }) => {
   const router = useRouter();
@@ -50,23 +37,24 @@ const AuthorizationFormCard = (props: { type: CardType }) => {
     company: false,
   });
 
-  const [showToast, setShowToast] = useState(false);
+  const [showErrorToast, setShowErrorToast] = useState(false);
 
   const submit = (event: any) => {
     event.preventDefault();
 
-    // reset show toast
-    setShowToast(false);
+    // reset toast
+    setShowErrorToast(false);
 
-    const email = event.target.email.value;
+    const email = event.target.email.value.toLowerCase();
     const password = event.target.password.value;
     const confirmPassword = event.target.confirmPassword?.value;
 
-    // additional values for employer registration
+    // additional values only used for employer registration
     const name = event.target.name?.value;
     const company = event.target.company?.value;
     const website = event.target.website?.value;
 
+    // SignUp
     if (props.type === CardType.SIGN_UP) {
       // validate user input
       let validationResult;
@@ -97,41 +85,40 @@ const AuthorizationFormCard = (props: { type: CardType }) => {
       });
 
       if (validationResult.isValid) {
-        // submit form
         let userInput:
           | EmployerRegistrationUserInput
           | EmployeeRegistrationUserInput;
 
         if (userType === UserType.EMPLOYER) {
           userInput = {
-            email: event.target.email.value,
-            password: event.target.password.value,
-            name: event.target.name.value,
-            company: event.target.company.value,
-            website: event.target.website.value,
+            email: email,
+            password: password,
+            name: name,
+            company: company,
+            website: website,
           };
-          registerEmployer(userInput).then((res) => {
+          signUpEmployer(userInput).then((res) => {
             if (!res.ok) {
               if (res.status === 409) {
                 console.log("email is already in use");
-                setShowToast(true);
+                setShowErrorToast(true);
               }
             } else {
-              // redirect to login page
+              // redirect to sign in page
               router.push("/account/signin");
             }
           });
         } else {
           userInput = {
-            email: event.target.email.value,
-            password: event.target.password.value,
+            email: email,
+            password: password,
           };
 
-          registerEmployee(userInput).then((res) => {
+          signUpEmployee(userInput).then((res) => {
             if (!res.ok) {
               if (res.status === 409) {
                 console.log("email is already in use");
-                setShowToast(true);
+                setShowErrorToast(true);
               }
             } else {
               // redirect to login page
@@ -141,18 +128,18 @@ const AuthorizationFormCard = (props: { type: CardType }) => {
         }
       }
     } else {
-      // submit form
+      // SignIn
       const userInput: EmployeeRegistrationUserInput = {
-        email: event.target.email.value,
-        password: event.target.password.value,
+        email: email,
+        password: password,
       };
 
       if (userType === UserType.EMPLOYER) {
-        loginEmployer(userInput).then(async (res) => {
+        signInEmployer(userInput).then(async (res) => {
           if (!res.ok) {
             if (res.status === 401) {
               console.log("invalid credentials");
-              setShowToast(true);
+              setShowErrorToast(true);
             }
           } else {
             const response = await res.json();
@@ -164,11 +151,11 @@ const AuthorizationFormCard = (props: { type: CardType }) => {
           }
         });
       } else {
-        loginEmployee(userInput).then(async (res) => {
+        signInEmployee(userInput).then(async (res) => {
           if (!res.ok) {
             if (res.status === 401) {
               console.log("invalid credentials");
-              setShowToast(true);
+              setShowErrorToast(true);
             }
           } else {
             // redirect to correct page based on user information
@@ -284,7 +271,7 @@ const AuthorizationFormCard = (props: { type: CardType }) => {
           </div>
         </div>
       </form>
-      {showToast && (
+      {showErrorToast && (
         <div className="toast toast-center mb-10">
           <div className="alert alert-error">
             <span>
