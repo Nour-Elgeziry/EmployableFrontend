@@ -7,9 +7,9 @@ import FilterBar from "./components/filterBar";
 import NavBar from "./components/navBar";
 
 import { Employee } from "./components/employeeCard";
-import { getAllEmployees } from "../../../routes";
+import { getAllEmployees } from "../../../routes/employee";
 
-const EmployerDashboard = () => {
+const EmployerDashboard = (props: { user: any }) => {
   const [employees, setEmployees] = useState<Employee[]>([]);
   const [filteredEmployees, setFilteredEmployees] = useState<Employee[]>([]);
   const [filters, setFilters] = useState({
@@ -90,7 +90,11 @@ const EmployerDashboard = () => {
 
       <div className="flex flex-col items-center">
         {filteredEmployees.map((employee: Employee, index: number) => (
-          <EmployeeCard key={index} employee={employee} />
+          <EmployeeCard
+            key={index}
+            employee={employee}
+            isShortListed={props.user.employeeShortList?.includes(employee._id)}
+          />
         ))}
       </div>
     </div>

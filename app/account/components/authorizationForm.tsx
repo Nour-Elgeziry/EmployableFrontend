@@ -6,12 +6,9 @@ import PasswordInput, { PasswordType } from "./inputComponents/passwordInput";
 
 import { validateUserInput, ValidationError } from "../utils/inputValidation";
 
-import {
-  signUpEmployee,
-  signUpEmployer,
-  signInEmployee,
-  signInEmployer,
-} from "../../routes";
+import { signUpEmployee, signInEmployee } from "../../routes/employee";
+
+import { signInEmployer, signUpEmployer } from "../../routes/employer";
 
 import TextInput, { TextInputField } from "./inputComponents/textInput";
 import WebsiteInput from "./inputComponents/websiteInput";

@@ -3,7 +3,7 @@ import { useState } from "react";
 import {
   submitEmployeePersonalInformation,
   submitEmployeeCareerInformation,
-} from "../../routes";
+} from "../../routes/employee";
 
 import PersonalInformation from "./employeeInformationCards/personalInformation";
 import CareerInformation from "./employeeInformationCards/careerInformation";

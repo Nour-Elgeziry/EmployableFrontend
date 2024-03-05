@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { usePathname } from "next/navigation";
-import { checkUserLoggedIn } from "../routes";
+import { checkUserLoggedIn } from "../routes/user";
 
 export default function AccountLayout({
   children,
@@ -19,7 +19,6 @@ export default function AccountLayout({
         return;
       }
       const user = JSON.parse(localStorage.getItem("user")!);
-      
 
       if (user.role === "employer") {
         window.location.href = "/";

@@ -3,13 +3,20 @@
 import Link from "next/link";
 import Image from "next/image";
 
-import { logoutUser } from "./routes";
+import { logoutUser } from "./routes/user";
+import { useEffect, useState } from "react";
 
 export default function Home() {
-
   // get user role from local storage
-  const userObj = localStorage.getItem("user");
-  const role = userObj ? JSON.parse(userObj).role : null;
+  const [role, setRole] = useState<string>();
+
+  useEffect(() => {
+    const userObj = localStorage.getItem("user");
+    if (userObj) {
+      const user = JSON.parse(userObj);
+      setRole(user.role);
+    }
+  }, []);
 
   return (
     <main className="bg-white dark:bg-gray-900">

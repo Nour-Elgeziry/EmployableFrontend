@@ -1,7 +1,7 @@
 import Link from "next/link";
 import Image from "next/image";
 
-import { logoutUser } from "@/app/routes";
+import { logoutUser } from "@/app/routes/user";
 const NavBar = () => {
   return (
     <div className="navbar h-0 bg-gradient-to-r from-blue-500 to-teal-400 dark:from-blue-900 dark:to-gray-800">
@@ -79,14 +79,13 @@ const NavBar = () => {
               </ul>
             </details>
           </li>
-          
         </ul>
       </div>
       <div className="navbar-end">
         <a
           onClick={() => {
             localStorage.removeItem("user");
-            logoutUser();
+            logoutUser().then(() => (window.location.href = "/"));
           }}
           className="btn"
         >

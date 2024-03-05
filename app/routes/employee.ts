@@ -1,8 +1,8 @@
 import {
   EmployeeCareerInfo,
   EmployeePersonalInfo,
-} from "./account/components/employeeInformation";
-import { EmployeeRegistrationUserInput, EmployerRegistrationUserInput } from "./account/types";
+} from "../account/components/employeeInformation";
+import { EmployeeRegistrationUserInput } from "../account/types";
 
 export function getAllEmployees() {
   return fetch("http://localhost:8080/employee/get-all", {
@@ -25,17 +25,6 @@ export function signInEmployee(userInput: EmployeeRegistrationUserInput) {
   });
 }
 
-export function signInEmployer(userInput: EmployeeRegistrationUserInput) {
-  return fetch("http://localhost:8080/employer/signIn", {
-    method: "POST",
-    credentials: "include",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(userInput),
-  });
-}
-
 export function signUpEmployee(userInput: EmployeeRegistrationUserInput) {
   return fetch("http://localhost:8080/employee/signUp", {
     method: "POST",
@@ -43,36 +32,6 @@ export function signUpEmployee(userInput: EmployeeRegistrationUserInput) {
       "Content-Type": "application/json",
     },
     body: JSON.stringify(userInput),
-  });
-}
-
-export function signUpEmployer(userInput: EmployerRegistrationUserInput) {
-  return fetch("http://localhost:8080/employer/signUp", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(userInput),
-  });
-}
-
-export function logoutUser() {
-  return fetch("http://localhost:8080/user/logout", {
-    method: "GET",
-    credentials: "include",
-    headers: {
-      "Content-Type": "application/json",
-    },
-  });
-}
-
-export function checkUserLoggedIn() {
-  return fetch("http://localhost:8080/user/check-user-logged-in", {
-    method: "GET",
-    credentials: "include",
-    headers: {
-      "Content-Type": "application/json",
-    },
   });
 }
 
