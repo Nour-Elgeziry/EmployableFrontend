@@ -15,8 +15,6 @@ export default function EmployerLayout({
     if (!localStorage.getItem("user")) {
       window.location.href = "/account/signin";
     }
-    const user = JSON.parse(localStorage.getItem("user")!);
-    setUser(user);
   }, []);
 
   return (

@@ -31,9 +31,16 @@ const Shortlist = () => {
     fetchShortList();
   }, []);
 
-  // Function to refetch shortlist data
-  const handleRefetchShortList = () => {
-    fetchShortList();
+
+  const onUpdateShortList = (updatedShortList: Employee[]) => {
+    setShortList(updatedShortList);
+    setFilteredShortList(updatedShortList);
+    setFilters({
+      education: undefined,
+      title: undefined,
+      experience: undefined,
+      seniority: undefined,
+    });
   };
 
   const [filters, setFilters] = useState({
@@ -96,7 +103,7 @@ const Shortlist = () => {
             key={index}
             employee={employee}
             isShortListed={true}
-            onRefetchShortList={handleRefetchShortList} // Pass callback function
+            onUpdateShortList={onUpdateShortList}
           />
         ))}
       </div>

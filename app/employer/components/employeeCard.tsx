@@ -23,7 +23,7 @@ interface toastType {
 const EmployeeCard = (props: {
   employee: Employee;
   isShortListed: boolean;
-  onRefetchShortList?: () => void;
+  onUpdateShortList: (updatedShortList: Employee[]) => void;
 }) => {
   const [showToast, setShowToast] = useState<toastType>({
     show: false,
@@ -43,7 +43,6 @@ const EmployeeCard = (props: {
     }
   }, [showToast.show]);
 
-  const [isShortListed, setIsShortListed] = useState(props.isShortListed);
   const handleButtonClick = (event: any) => {
     event.preventDefault();
 
@@ -52,9 +51,9 @@ const EmployeeCard = (props: {
     if (clickedButton === "shortlist") {
       // Handle shortlist button click
       const employeeId = props.employee._id;
-      if (isShortListed) {
+      if (props.isShortListed) {
         // Remove from shortlist
-        removeEmployeeFromShortList(employeeId).then((res) => {
+        removeEmployeeFromShortList(employeeId).then(async (res) => {
           if (!res.ok) {
             setShowToast({
               show: true,
@@ -63,29 +62,20 @@ const EmployeeCard = (props: {
             });
             console.log("Failed to remove employee from shortlist");
           } else {
-            // adjust local storage user shortlist
-            const user = JSON.parse(localStorage.getItem("user") || "{}");
-            user.employeeShortList = user.employeeShortList.filter(
-              (id: any) => id !== employeeId
-            );
-            localStorage.setItem("user", JSON.stringify(user));
+            // get updated shortlist from server response
+            const updatedShortList = await res.json();
 
             setShowToast({
               show: true,
               type: "success",
               message: "Employee removed from shortlist",
             });
-
-            if (props.onRefetchShortList) {
-              props.onRefetchShortList?.();
-            } else {
-              setIsShortListed(false);
-            }
+            props.onUpdateShortList(updatedShortList);
           }
         });
       } else {
         // Add to shortlist
-        addEmployeeToShortList(employeeId).then((res) => {
+        addEmployeeToShortList(employeeId).then(async (res) => {
           if (!res.ok) {
             setShowToast({
               show: true,
@@ -94,18 +84,16 @@ const EmployeeCard = (props: {
             });
             console.log("Failed to add employee to shortlist");
           } else {
-            // adjust local storage user shortlist
-            const user = JSON.parse(localStorage.getItem("user") || "{}");
-            user.employeeShortList.push(employeeId);
-            localStorage.setItem("user", JSON.stringify(user));
+            const updatedShortList = await res.json();
 
-            setIsShortListed(true);
+            props.onUpdateShortList(updatedShortList);
 
             setShowToast({
               show: true,
               type: "success",
               message: "Employee added to shortlist",
             });
+
             console.log("Employee added to shortlist");
           }
         });
@@ -126,12 +114,12 @@ const EmployeeCard = (props: {
               name="shortlist"
               type="submit"
               className={`btn ${
-                isShortListed
+                props.isShortListed
                   ? "bg-red-500 hover:bg-red-600  dark:bg-red-800 dark:hover:bg-red-600"
                   : "bg-green-500 hover:bg-green-600 dark:bg-green-800 dark:hover:bg-green-600"
               } btn-sm`}
             >
-              {isShortListed ? (
+              {props.isShortListed ? (
                 <>
                   <i className="fas fa-trash-alt"></i> Remove
                 </>
