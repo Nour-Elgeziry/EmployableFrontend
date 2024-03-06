@@ -23,6 +23,7 @@ interface toastType {
 const EmployeeCard = (props: {
   employee: Employee;
   isShortListed: boolean;
+  onRefetchShortList?: () => void;
 }) => {
   const [showToast, setShowToast] = useState<toastType>({
     show: false,
@@ -47,7 +48,6 @@ const EmployeeCard = (props: {
     event.preventDefault();
 
     const clickedButton = event.nativeEvent.submitter?.getAttribute("name");
-    console.log("clickedButton", clickedButton);
 
     if (clickedButton === "shortlist") {
       // Handle shortlist button click
@@ -66,11 +66,9 @@ const EmployeeCard = (props: {
             // adjust local storage user shortlist
             const user = JSON.parse(localStorage.getItem("user") || "{}");
             user.employeeShortList = user.employeeShortList.filter(
-              (employeeId: any) => employeeId !== employeeId
+              (id: any) => id !== employeeId
             );
             localStorage.setItem("user", JSON.stringify(user));
-
-            setIsShortListed(false);
 
             setShowToast({
               show: true,
@@ -78,7 +76,11 @@ const EmployeeCard = (props: {
               message: "Employee removed from shortlist",
             });
 
-            console.log("Employee removed from shortlist");
+            if (props.onRefetchShortList) {
+              props.onRefetchShortList?.();
+            } else {
+              setIsShortListed(false);
+            }
           }
         });
       } else {
@@ -125,8 +127,8 @@ const EmployeeCard = (props: {
               type="submit"
               className={`btn ${
                 isShortListed
-                  ? "bg-red-800 hover:bg-red-600"
-                  : "bg-green-800 hover:bg-green-600"
+                  ? "bg-red-500 hover:bg-red-600  dark:bg-red-800 dark:hover:bg-red-600"
+                  : "bg-green-500 hover:bg-green-600 dark:bg-green-800 dark:hover:bg-green-600"
               } btn-sm`}
             >
               {isShortListed ? (

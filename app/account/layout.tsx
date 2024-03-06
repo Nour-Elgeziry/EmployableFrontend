@@ -2,7 +2,6 @@
 
 import { useState, useEffect } from "react";
 import { usePathname } from "next/navigation";
-import { checkUserLoggedIn } from "../routes/user";
 
 export default function AccountLayout({
   children,

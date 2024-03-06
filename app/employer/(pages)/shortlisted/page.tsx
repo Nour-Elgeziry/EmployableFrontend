@@ -1,17 +1,41 @@
 "use client";
-
 import { useState, useEffect } from "react";
+import EmployeeCard, { Employee } from "../../components/employeeCard";
+import { getEmployeeShortList } from "@/app/routes/employer";
+import FilterBar from "../../components/filterBar";
 
-import EmployeeCard from "./components/employeeCard";
-import FilterBar from "./components/filterBar";
-import NavBar from "./components/navBar";
+const Shortlist = () => {
+  const [shortList, setShortList] = useState<Employee[]>([]);
+  const [filteredShortList, setFilteredShortList] = useState<Employee[]>([]);
 
-import { Employee } from "./components/employeeCard";
-import { getAllEmployees } from "../../../routes/employee";
+  // Function to fetch shortlist data
+  const fetchShortList = async () => {
+    try {
+      const res = await getEmployeeShortList();
+      if (!res.ok) {
+        console.log(res);
+        throw new Error("Failed to fetch shortlist");
+      }
 
-const EmployerDashboard = (props: { user: any }) => {
-  const [employees, setEmployees] = useState<Employee[]>([]);
-  const [filteredEmployees, setFilteredEmployees] = useState<Employee[]>([]);
+      const employerData: any = await res.json();
+      const shortList = employerData.employeeShortList;
+      setShortList(shortList);
+      setFilteredShortList(shortList);
+    } catch (error) {
+      console.error("Error fetching shortlist:", error);
+    }
+  };
+
+  useEffect(() => {
+    // Fetch shortlist data when the component mounts
+    fetchShortList();
+  }, []);
+
+  // Function to refetch shortlist data
+  const handleRefetchShortList = () => {
+    fetchShortList();
+  };
+
   const [filters, setFilters] = useState({
     education: undefined,
     title: undefined,
@@ -19,27 +43,9 @@ const EmployerDashboard = (props: { user: any }) => {
     seniority: undefined,
   });
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const res = await getAllEmployees();
-        if (!res.ok) {
-          throw new Error("Failed to fetch employees");
-        }
-        const employeesData: Employee[] = await res.json();
-        setEmployees(employeesData);
-        setFilteredEmployees(employeesData); // Initialize filtered list with all employees
-      } catch (error) {
-        console.error("Error fetching employees:", error);
-      }
-    };
-
-    fetchData();
-  }, []);
-
   // Apply filters incrementally
   useEffect(() => {
-    let filteredData = employees;
+    let filteredData = shortList;
 
     if (filters.education) {
       filteredData = filteredData.filter(
@@ -65,14 +71,11 @@ const EmployerDashboard = (props: { user: any }) => {
       );
     }
 
-    setFilteredEmployees(filteredData);
-  }, [employees, filters]);
+    setFilteredShortList(filteredData);
+  }, [shortList, filters]);
 
   return (
     <div>
-      <div>
-        <NavBar />
-      </div>
       <div className="min-w-full flex justify-center mt-16 sticky top-4 z-10">
         <FilterBar
           setFilter={(type: string, value: string | undefined) =>
@@ -87,13 +90,13 @@ const EmployerDashboard = (props: { user: any }) => {
           seniority={filters.seniority}
         />
       </div>
-
       <div className="flex flex-col items-center">
-        {filteredEmployees.map((employee: Employee, index: number) => (
+        {filteredShortList?.map((employee: any, index: number) => (
           <EmployeeCard
             key={index}
             employee={employee}
-            isShortListed={props.user.employeeShortList?.includes(employee._id)}
+            isShortListed={true}
+            onRefetchShortList={handleRefetchShortList} // Pass callback function
           />
         ))}
       </div>
@@ -101,4 +104,4 @@ const EmployerDashboard = (props: { user: any }) => {
   );
 };
 
-export default EmployerDashboard;
+export default Shortlist;

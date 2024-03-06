@@ -43,3 +43,12 @@ export function removeEmployeeFromShortList(employeeId: string) {
     body: JSON.stringify({ employeeId }),
   });
 }
+export function getEmployeeShortList() {
+  return fetch(`http://localhost:8080/employer/get-employee-shortlist`, {
+    method: "GET",
+    credentials: "include",
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
+}

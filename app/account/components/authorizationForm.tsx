@@ -144,7 +144,7 @@ const AuthorizationFormCard = (props: { type: CardType }) => {
             const userObj = JSON.stringify(response);
             localStorage.setItem("user", userObj);
 
-            router.push("/dashboard");
+            router.push("/employer/dashboard");
           }
         });
       } else {
@@ -166,7 +166,7 @@ const AuthorizationFormCard = (props: { type: CardType }) => {
               case true:
                 switch (response.isCareerInformationComplete) {
                   case true:
-                    router.push("/dashboard");
+                    router.push("/employee/dashboard");
                     break;
                   case false:
                     router.push("/account/careerInformation");
