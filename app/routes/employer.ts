@@ -1,9 +1,9 @@
 import {
-  EmployeeRegistrationUserInput,
+  JobSeekerRegistrationUserInput,
   EmployerRegistrationUserInput,
 } from "../account/types";
 
-export function signInEmployer(userInput: EmployeeRegistrationUserInput) {
+export function signInEmployer(userInput: JobSeekerRegistrationUserInput) {
   return fetch("http://localhost:8080/employer/signIn", {
     method: "POST",
     credentials: "include",
@@ -22,29 +22,29 @@ export function signUpEmployer(userInput: EmployerRegistrationUserInput) {
     body: JSON.stringify(userInput),
   });
 }
-export function addEmployeeToShortList(employeeId: string) {
-  return fetch(`http://localhost:8080/employer/add-employee-shortlist`, {
+export function addJobSeekerToShortList(jobSeekerId: string) {
+  return fetch(`http://localhost:8080/employer/add-job-seeker-shortlist`, {
     method: "POST",
     credentials: "include",
     headers: {
       "Content-Type": "application/json",
     },
-    body: JSON.stringify({ employeeId }),
+    body: JSON.stringify({ jobSeekerId }),
   });
 }
 
-export function removeEmployeeFromShortList(employeeId: string) {
-  return fetch(`http://localhost:8080/employer/remove-employee-shortlist`, {
+export function removeJobSeekerFromShortList(jobSeekerId: string) {
+  return fetch(`http://localhost:8080/employer/remove-job-seeker-shortlist`, {
     method: "POST",
     credentials: "include",
     headers: {
       "Content-Type": "application/json",
     },
-    body: JSON.stringify({ employeeId }),
+    body: JSON.stringify({ jobSeekerId }),
   });
 }
-export function getEmployeeShortList() {
-  return fetch(`http://localhost:8080/employer/get-employee-shortlist`, {
+export function getJobSeekerShortList() {
+  return fetch(`http://localhost:8080/employer/get-job-seeker-shortlist`, {
     method: "GET",
     credentials: "include",
     headers: {

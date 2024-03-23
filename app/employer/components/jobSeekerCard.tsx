@@ -1,10 +1,10 @@
 import {
-  addEmployeeToShortList,
-  removeEmployeeFromShortList,
+  addJobSeekerToShortList,
+  removeJobSeekerFromShortList,
 } from "@/app/routes/employer";
 import { useEffect, useState } from "react";
 
-export interface Employee {
+export interface JobSeeker {
   _id: string;
   name: string;
   age: number;
@@ -20,10 +20,10 @@ interface toastType {
   message: string;
 }
 
-const EmployeeCard = (props: {
-  employee: Employee;
+const JobSeekerCard = (props: {
+  jobSeeker: JobSeeker;
   isShortListed: boolean;
-  onUpdateShortList: (updatedShortList: Employee[]) => void;
+  onUpdateShortList: (updatedShortList: JobSeeker[]) => void;
 }) => {
   const [showToast, setShowToast] = useState<toastType>({
     show: false,
@@ -50,17 +50,17 @@ const EmployeeCard = (props: {
 
     if (clickedButton === "shortlist") {
       // Handle shortlist button click
-      const employeeId = props.employee._id;
+      const jobSeekerId = props.jobSeeker._id;
       if (props.isShortListed) {
         // Remove from shortlist
-        removeEmployeeFromShortList(employeeId).then(async (res) => {
+        removeJobSeekerFromShortList(jobSeekerId).then(async (res) => {
           if (!res.ok) {
             setShowToast({
               show: true,
               type: "error",
-              message: "Failed to remove employee from shortlist",
+              message: "Failed to remove job Seeker from shortlist",
             });
-            console.log("Failed to remove employee from shortlist");
+            console.log("Failed to remove job Seeker from shortlist");
           } else {
             // get updated shortlist from server response
             const updatedShortList = await res.json();
@@ -68,21 +68,21 @@ const EmployeeCard = (props: {
             setShowToast({
               show: true,
               type: "success",
-              message: "Employee removed from shortlist",
+              message: "Job seeker removed from shortlist",
             });
             props.onUpdateShortList(updatedShortList);
           }
         });
       } else {
         // Add to shortlist
-        addEmployeeToShortList(employeeId).then(async (res) => {
+        addJobSeekerToShortList(jobSeekerId).then(async (res) => {
           if (!res.ok) {
             setShowToast({
               show: true,
               type: "error",
-              message: "Failed to add employee to shortlist",
+              message: "Failed to add job seeker to shortlist",
             });
-            console.log("Failed to add employee to shortlist");
+            console.log("Failed to add job seeker to shortlist");
           } else {
             const updatedShortList = await res.json();
 
@@ -91,10 +91,10 @@ const EmployeeCard = (props: {
             setShowToast({
               show: true,
               type: "success",
-              message: "Employee added to shortlist",
+              message: "Job seeker added to shortlist",
             });
 
-            console.log("Employee added to shortlist");
+            console.log("Job seeker added to shortlist");
           }
         });
       }
@@ -109,7 +109,7 @@ const EmployeeCard = (props: {
       <div className="card w-96 bg-base-100 shadow-xl m-4 flex flex-col">
         <div className="card-body flex flex-col">
           <div className="flex justify-between items-center mb-4">
-            <h2 className="card-title mb-0">{`${props.employee.name} (${props.employee.age})`}</h2>
+            <h2 className="card-title mb-0">{`${props.jobSeeker.name} (${props.jobSeeker.age})`}</h2>
             <button
               name="shortlist"
               type="submit"
@@ -130,10 +130,10 @@ const EmployeeCard = (props: {
               )}
             </button>
           </div>
-          <p className="text-sm text-gray-400 -mt-2">{props.employee.title}</p>
-          <p>Education: {props.employee.education}</p>
-          <p>Experience: {props.employee.experience}</p>
-          <p>Seniority: {props.employee.seniority}</p>
+          <p className="text-sm text-gray-400 -mt-2">{props.jobSeeker.title}</p>
+          <p>Education: {props.jobSeeker.education}</p>
+          <p>Experience: {props.jobSeeker.experience}</p>
+          <p>Seniority: {props.jobSeeker.seniority}</p>
           <div className="card-actions justify-end">
             <button name="contact" type="submit" className="btn btn-primary">
               Contact
@@ -152,4 +152,4 @@ const EmployeeCard = (props: {
   );
 };
 
-export default EmployeeCard;
+export default JobSeekerCard;

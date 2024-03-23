@@ -4,17 +4,17 @@ export enum CardType {
 }
 
 export enum UserType {
-  EMPLOYEE = "employee",
+  JOB_SEEKER = "jobSeeker",
   EMPLOYER = "employer",
 }
 
-export interface EmployeeRegistrationUserInput {
+export interface JobSeekerRegistrationUserInput {
   email: string;
   password: string;
 }
 
 export interface EmployerRegistrationUserInput
-  extends EmployeeRegistrationUserInput {
+  extends JobSeekerRegistrationUserInput {
   name: string;
   company: string;
   website: string;

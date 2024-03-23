@@ -6,7 +6,7 @@ import PasswordInput, { PasswordType } from "./inputComponents/passwordInput";
 
 import { validateUserInput, ValidationError } from "../utils/inputValidation";
 
-import { signUpEmployee, signInEmployee } from "../../routes/employee";
+import { signUpJobSeeker, signInJobSeeker } from "../../routes/jobSeeker";
 
 import { signInEmployer, signUpEmployer } from "../../routes/employer";
 
@@ -15,7 +15,7 @@ import WebsiteInput from "./inputComponents/websiteInput";
 
 import {
   CardType,
-  EmployeeRegistrationUserInput,
+  JobSeekerRegistrationUserInput,
   EmployerRegistrationUserInput,
   UserType,
 } from "../types";
@@ -23,7 +23,7 @@ import {
 const AuthorizationFormCard = (props: { type: CardType }) => {
   const router = useRouter();
 
-  const [userType, setUserType] = useState(UserType.EMPLOYEE);
+  const [userType, setUserType] = useState(UserType.JOB_SEEKER);
 
   const [isUserInputValid, setIsUserInputValid] = useState({
     email: false,
@@ -84,7 +84,7 @@ const AuthorizationFormCard = (props: { type: CardType }) => {
       if (validationResult.isValid) {
         let userInput:
           | EmployerRegistrationUserInput
-          | EmployeeRegistrationUserInput;
+          | JobSeekerRegistrationUserInput;
 
         if (userType === UserType.EMPLOYER) {
           userInput = {
@@ -111,7 +111,7 @@ const AuthorizationFormCard = (props: { type: CardType }) => {
             password: password,
           };
 
-          signUpEmployee(userInput).then((res) => {
+          signUpJobSeeker(userInput).then((res) => {
             if (!res.ok) {
               if (res.status === 409) {
                 console.log("email is already in use");
@@ -126,7 +126,7 @@ const AuthorizationFormCard = (props: { type: CardType }) => {
       }
     } else {
       // SignIn
-      const userInput: EmployeeRegistrationUserInput = {
+      const userInput: JobSeekerRegistrationUserInput = {
         email: email,
         password: password,
       };
@@ -148,7 +148,7 @@ const AuthorizationFormCard = (props: { type: CardType }) => {
           }
         });
       } else {
-        signInEmployee(userInput).then(async (res) => {
+        signInJobSeeker(userInput).then(async (res) => {
           if (!res.ok) {
             if (res.status === 401) {
               console.log("invalid credentials");
@@ -166,7 +166,7 @@ const AuthorizationFormCard = (props: { type: CardType }) => {
               case true:
                 switch (response.isCareerInformationComplete) {
                   case true:
-                    router.push("/employee/dashboard");
+                    router.push("/jobSeeker/dashboard");
                     break;
                   case false:
                     router.push("/account/careerInformation");
@@ -200,14 +200,14 @@ const AuthorizationFormCard = (props: { type: CardType }) => {
             </h2>
 
             <div>
-              <span className="label-text">Employee</span>
+              <span className="label-text">Job Seeker</span>
               <input
                 type="checkbox"
-                className="toggle [--tglbg:grey] bg-gray-400 hover:bg-gray-700 border-gray-800 mx-6 mt-2"
+                className="toggle [--tglbg:grey] bg-gray-400 hover:bg-gray-700 border-gray-800 mx-6 mt-2 -mb-2"
                 onChange={() => {
-                  userType === UserType.EMPLOYEE
+                  userType === UserType.JOB_SEEKER
                     ? setUserType(UserType.EMPLOYER)
-                    : setUserType(UserType.EMPLOYEE);
+                    : setUserType(UserType.JOB_SEEKER);
                 }}
                 checked={userType === UserType.EMPLOYER}
               />

@@ -1,7 +1,7 @@
 import {
-  EmployeeCareerInfo,
-  EmployeePersonalInfo,
-} from "../account/components/employeeInformation";
+  JobSeekerCareerInfo,
+  JobSeekerPersonalInfo,
+} from "../account/components/jobSeekerInformation";
 
 export function logoutUser() {
   return fetch("http://localhost:8080/user/logout", {

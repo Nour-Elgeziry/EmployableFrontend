@@ -1,11 +1,11 @@
 "use client";
-import EmployeeInformationForm from "../../components/employeeInformation";
-import { CardType } from "../../components/employeeInformation";
+import JobSeekerInformationForm from "../../components/jobSeekerInformation";
+import { CardType } from "../../components/jobSeekerInformation";
 
 const CareerInformation = () => {
   return (
     <div className="flex justify-center items-center h-screen">
-      <EmployeeInformationForm type={CardType.CAREER} />
+      <JobSeekerInformationForm type={CardType.CAREER} />
     </div>
   );
 };

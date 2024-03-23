@@ -1,24 +1,24 @@
 "use client";
 import { useState, useEffect } from "react";
-import EmployeeCard, { Employee } from "../../components/employeeCard";
-import { getEmployeeShortList } from "@/app/routes/employer";
+import JobSeekerCard, { JobSeeker } from "../../components/jobSeekerCard";
+import { getJobSeekerShortList } from "@/app/routes/employer";
 import FilterBar from "../../components/filterBar";
 
 const Shortlist = () => {
-  const [shortList, setShortList] = useState<Employee[]>([]);
-  const [filteredShortList, setFilteredShortList] = useState<Employee[]>([]);
+  const [shortList, setShortList] = useState<JobSeeker[]>([]);
+  const [filteredShortList, setFilteredShortList] = useState<JobSeeker[]>([]);
 
   // Function to fetch shortlist data
   const fetchShortList = async () => {
     try {
-      const res = await getEmployeeShortList();
+      const res = await getJobSeekerShortList();
       if (!res.ok) {
         console.log(res);
         throw new Error("Failed to fetch shortlist");
       }
 
       const employerData: any = await res.json();
-      const shortList = employerData.employeeShortList;
+      const shortList = employerData.jobSeekerShortList;
       setShortList(shortList);
       setFilteredShortList(shortList);
     } catch (error) {
@@ -32,7 +32,7 @@ const Shortlist = () => {
   }, []);
 
 
-  const onUpdateShortList = (updatedShortList: Employee[]) => {
+  const onUpdateShortList = (updatedShortList: JobSeeker[]) => {
     setShortList(updatedShortList);
     setFilteredShortList(updatedShortList);
     setFilters({
@@ -56,25 +56,25 @@ const Shortlist = () => {
 
     if (filters.education) {
       filteredData = filteredData.filter(
-        (employee) => employee.education === filters.education
+        (jobSeeker) => jobSeeker.education === filters.education
       );
     }
 
     if (filters.title) {
       filteredData = filteredData.filter(
-        (employee) => employee.title === filters.title
+        (jobSeeker) => jobSeeker.title === filters.title
       );
     }
 
     if (filters.experience) {
       filteredData = filteredData.filter(
-        (employee) => employee.experience === filters.experience
+        (jobSeeker) => jobSeeker.experience === filters.experience
       );
     }
 
     if (filters.seniority) {
       filteredData = filteredData.filter(
-        (employee) => employee.seniority === filters.seniority
+        (jobSeeker) => jobSeeker.seniority === filters.seniority
       );
     }
 
@@ -98,10 +98,10 @@ const Shortlist = () => {
         />
       </div>
       <div className="flex flex-col items-center">
-        {filteredShortList?.map((employee: any, index: number) => (
-          <EmployeeCard
+        {filteredShortList?.map((jobSeeker: any, index: number) => (
+          <JobSeekerCard
             key={index}
-            employee={employee}
+            jobSeeker={jobSeeker}
             isShortListed={true}
             onUpdateShortList={onUpdateShortList}
           />

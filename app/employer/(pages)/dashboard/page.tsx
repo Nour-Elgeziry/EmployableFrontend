@@ -1,15 +1,15 @@
 "use client";
 
-import { getAllEmployees } from "@/app/routes/employee";
+import { getAllJobSeekers } from "@/app/routes/jobSeeker";
 import { useState, useEffect } from "react";
-import EmployeeCard, { Employee } from "../../components/employeeCard";
+import JobSeekerCard, { JobSeeker } from "../../components/jobSeekerCard";
 import FilterBar from "../../components/filterBar";
-import { getEmployeeShortList } from "@/app/routes/employer";
+import { getJobSeekerShortList } from "@/app/routes/employer";
 
 const EmployerDashboard = (props: { user: any }) => {
   const [shortList, setShortList] = useState<any>();
-  const [employees, setEmployees] = useState<Employee[]>([]);
-  const [filteredEmployees, setFilteredEmployees] = useState<Employee[]>([]);
+  const [jobSeekers, setJobSeekers] = useState<JobSeeker[]>([]);
+  const [filteredJobSeekers, setFilteredJobSeekers] = useState<JobSeeker[]>([]);
   const [filters, setFilters] = useState({
     education: undefined,
     title: undefined,
@@ -23,24 +23,24 @@ const EmployerDashboard = (props: { user: any }) => {
     }
     const fetchData = async () => {
       try {
-        const allEmployees = await getAllEmployees();
-        if (!allEmployees.ok) {
-          throw new Error("Failed to fetch employees");
+        const allJobSeekers = await getAllJobSeekers();
+        if (!allJobSeekers.ok) {
+          throw new Error("Failed to fetch job seekers");
         }
-        const employeesData: Employee[] = await allEmployees.json();
+        const jobSeekersData: JobSeeker[] = await allJobSeekers.json();
 
-        setEmployees(employeesData);
-        setFilteredEmployees(employeesData);
+        setJobSeekers(jobSeekersData);
+        setFilteredJobSeekers(jobSeekersData);
 
-        const shortList = await getEmployeeShortList();
+        const shortList = await getJobSeekerShortList();
 
         if (!shortList.ok) {
           throw new Error("Failed to fetch shortlist");
         }
         const shortListData: any = await shortList.json();
-        setShortList(shortListData.employeeShortList);
+        setShortList(shortListData.jobSeekerShortList);
       } catch (error) {
-        console.error("Error fetching employees:", error);
+        console.error("Error fetching jobSeekers:", error);
       }
     };
 
@@ -49,36 +49,36 @@ const EmployerDashboard = (props: { user: any }) => {
 
   // Apply filters incrementally
   useEffect(() => {
-    let filteredData = employees;
+    let filteredData = jobSeekers;
 
     if (filters.education) {
       filteredData = filteredData.filter(
-        (employee) => employee.education === filters.education
+        (jobSeeker) => jobSeeker.education === filters.education
       );
     }
 
     if (filters.title) {
       filteredData = filteredData.filter(
-        (employee) => employee.title === filters.title
+        (jobSeeker) => jobSeeker.title === filters.title
       );
     }
 
     if (filters.experience) {
       filteredData = filteredData.filter(
-        (employee) => employee.experience === filters.experience
+        (jobSeeker) => jobSeeker.experience === filters.experience
       );
     }
 
     if (filters.seniority) {
       filteredData = filteredData.filter(
-        (employee) => employee.seniority === filters.seniority
+        (jobSeeker) => jobSeeker.seniority === filters.seniority
       );
     }
 
-    setFilteredEmployees(filteredData);
-  }, [employees, filters]);
+    setFilteredJobSeekers(filteredData);
+  }, [jobSeekers, filters]);
 
-  const onUpdateShortList = (updatedShortList: Employee[]) => {
+  const onUpdateShortList = (updatedShortList: JobSeeker[]) => {
     setShortList(updatedShortList);
   };
 
@@ -100,12 +100,12 @@ const EmployerDashboard = (props: { user: any }) => {
       </div>
 
       <div className="flex flex-col items-center">
-        {filteredEmployees.map((employee: Employee, index: number) => (
-          <EmployeeCard
+        {filteredJobSeekers.map((jobSeeker: JobSeeker, index: number) => (
+          <JobSeekerCard
             key={index}
-            employee={employee}
+            jobSeeker={jobSeeker}
             isShortListed={
-              shortList?.find((emp: Employee) => emp._id === employee._id)
+              shortList?.find((emp: JobSeeker) => emp._id === jobSeeker._id)
                 ? true
                 : false
             }

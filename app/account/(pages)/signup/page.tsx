@@ -1,7 +1,7 @@
 "use client";
 
 import AuthorizationFormCard from "../../components/authorizationForm";
-import { CardType } from "../../components/authorizationForm";
+import { CardType } from "../../types";
 
 const SignUp = () => {
   return (
